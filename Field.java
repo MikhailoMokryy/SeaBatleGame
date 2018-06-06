@@ -111,6 +111,19 @@ public class Field extends JFrame {
 					
 			}
 		});
+		cell[1][0].addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(cell[1][0].getName().equals(""))
+					cell[1][0].setText("X");
+				else
+					cell[1][0].setText("Xs");
+				cell[1][0].setEnabled(false);
+					
+			}
+		});
+
 			
 	}
 }
