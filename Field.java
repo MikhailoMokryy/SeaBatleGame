@@ -38,6 +38,7 @@ public class Field extends JFrame {
 			for (int k = 0; k < 10; k++) {
 				cell[i][k] = new JButton();
 				cell[i][k].setText(+i + " " + k);
+				cell[i][k].setName("");
 				field.add(cell[i][k]);
 			}
 		}
@@ -49,12 +50,12 @@ public class Field extends JFrame {
 		
 			cell[sh.Xcor][sh.Ycor].setName("S");
 		if(sh.horizontal==true) {
-			for(int i = 1;i<sh.deckNum+1;i++) {
+			for(int i = 0;i<sh.deckNum;i++) {
 				cell[sh.Xcor+i][sh.Ycor].setName("S");
 			}
 		}
 		if(sh.horizontal==false) {
-			for(int i = 1;i<sh.deckNum;i++) {
+			for(int i = 0;i<sh.deckNum;i++) {
 				cell[sh.Xcor][sh.Ycor+i].setName("S");
 			}
 		}
@@ -83,6 +84,30 @@ public class Field extends JFrame {
 				else
 					cell[0][1].setText("Xs");
 				cell[0][1].setEnabled(false);
+					
+			}
+		});
+		cell[0][2].addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(cell[0][2].getName().equals(""))
+					cell[0][2].setText("X");
+				else
+					cell[0][2].setText("Xs");
+				cell[0][2].setEnabled(false);
+					
+			}
+		});
+		cell[0][3].addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(cell[0][3].getName().equals(""))
+					cell[0][3].setText("X");
+				else
+					cell[0][3].setText("Xs");
+				cell[0][3].setEnabled(false);
 					
 			}
 		});
