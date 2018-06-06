@@ -1,12 +1,13 @@
 
 public class Ship {
 	int deckNum;
-	boolean[] health= new boolean[deckNum];
+	boolean[] health;
 	int Xcor;//cordinats of first field
 	int Ycor;
 	boolean horizontal;
 	Ship(int deck,int x,int y,boolean horizontal) {
 		deckNum=deck;
+		health= new boolean[deckNum];
 		Xcor=x;
 		Ycor=y;
 		this.horizontal=horizontal;
