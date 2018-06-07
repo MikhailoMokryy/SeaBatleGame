@@ -1,107 +1,61 @@
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import java.awt.CardLayout;
-import java.awt.Panel;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.GroupLayout;
-import javax.swing.JButton;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.Component;
-import java.awt.Dimension;
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JPasswordField;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 
-public class TestField extends JFrame {
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
-	private JPanel contentPane;
-	private JPanel[][] cell1;
-	private JPanel[][] cell2;
 
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TestField frame = new TestField();
-					frame.setVisible(true);
-					frame.setResizable(false);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+
+public class TestField extends JPanel{
+
+	public TestField(){
 	}
 
-	/**
-	 * Create the frame.
+ /**
+	 * 
 	 */
-	public TestField() {
-		getContentPane().setBackground(Color.WHITE);
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		getContentPane().setLayout(gridBagLayout);
-		
-		
-		
-		
-		
-	    cell1= new JPanel[10][10];
-	    GridBagConstraints gbc_panel1 = new GridBagConstraints();
-		for (int i = 0; i < 10; i++) {
-			for (int k = 0; k < 10; k++) {		
-			cell1[i][k] = new JPanel();
-			Border titled = BorderFactory.createLineBorder(Color.BLACK);
-			cell1[i][k].setBorder(titled);
-			cell1[i][k].setBackground(Color.LIGHT_GRAY);
-			gbc_panel1.ipady = 15;
-			gbc_panel1.ipadx = 15;
-			gbc_panel1.gridx = i;
-			gbc_panel1.gridy = k;	
-			getContentPane().add(cell1[i][k], gbc_panel1);
+	private static final long serialVersionUID = 1L;
 
+@Override	
+ public void paintComponent(Graphics g){
+
+  super.paintComponent(g);
+
+//g.drawImage(fon,0,0,900,600,null);
+
+g.setFont(new Font("Monaco",3,40));
+g.setColor(Color.BLUE);
+
+//Выведение надписей
+g.drawString("Компьютер", 150, 50);
+g.drawString("Игрок", 590, 50);
+
+g.setColor(Color.BLUE);
+for (int i = 0; i <= 10; i++){
+    g.drawLine(100+i*30, 100, 100+i*30, 400);
+    g.drawLine(100, 100+i*30, 400, 100+i*30);
+    g.drawLine(500+i*30, 100, 500+i*30, 400);
+    g.drawLine(500, 100+i*30, 800, 100+i*30);
+}
+
+
+      g.setFont(new Font("Monaco",0,20));
+
+g.setColor(Color.RED);
+
+for (int i = 1; i <= 10; i++){
 	
-			}
+g.drawString(""+i, 73, 93+i*30);
+
+g.drawString(""+i, 473, 93+i*30);
+
+g.drawString(""+(char)('A'+i-1), 78+i*30, 93);
+
+g.drawString(""+(char)('A'+i-1), 478+i*30, 93);
+
 		}
-		getContentPane().add(Box.createRigidArea(new Dimension(50, 0)));
-	
-		
-		
-		 cell2= new JPanel[10][10];
-			GridBagConstraints gbc_panel2 = new GridBagConstraints();
-			for (int i = 0; i < 10; i++) {
-				for (int k = 0; k < 10; k++) {		
-				cell2[i][k] = new JPanel();
-				Border titled = BorderFactory.createLineBorder(Color.BLACK);
-				cell2[i][k].setBorder(titled);
-				cell2[i][k].setBackground(Color.LIGHT_GRAY);
-				gbc_panel2.ipady = 15;
-				gbc_panel2.ipadx = 15;
-				gbc_panel2.gridx =11+ i;
-				gbc_panel2.gridy = k;	
-				getContentPane().add(cell2[i][k], gbc_panel2);
-			
-				}
-			}
-			
-			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setBounds(300, 300, 590, 292);
 	}
 
 }
