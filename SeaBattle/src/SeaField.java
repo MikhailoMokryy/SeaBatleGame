@@ -72,6 +72,9 @@ public class SeaField extends JPanel {
 				if((game.fieldArray1[i][k]==-2)) {
 					g.drawImage(shipPart, 100 + k * 30, 100 + i * 30, 30, 30, null);	
 				}
+				if((game.fieldArray1[i][k]==-1)) {
+					g.drawImage(hitPart, 100 + k * 30, 100 + i * 30, 30, 30, null);	
+				}
 				
 				if((game.fieldArray2[i][k]>=1)&&(game.fieldArray2[i][k]<=4)) {
 					g.drawImage(bomb, 500 + k * 30, 100 + i * 30, 30, 30, null);	
@@ -121,7 +124,12 @@ public class SeaField extends JPanel {
 					int i = (y-100)/30;
 					int k = (x-100)/30;
 					
+					if(game.fieldArray1[i][k] ==-2) {
+						game.fieldArray1[i][k] =-1;
+						
+					}else
 					game.fieldArray1[i][k] = 1;
+					
 					repaint();
 					revalidate();
 				}
