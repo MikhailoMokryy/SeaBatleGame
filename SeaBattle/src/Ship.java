@@ -9,8 +9,8 @@ public class Ship {
 	Ship(int deck,int x,int y,boolean horizontal) {
 		deckNum=deck;
 		health=deck;
-		Xcor=x;
-		Ycor=y;
+		Xcor=x-1;
+		Ycor=y-1;
 		this.horizontal=horizontal;
 	}
 	public boolean isKilled(){

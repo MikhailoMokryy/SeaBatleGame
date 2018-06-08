@@ -41,6 +41,10 @@ public class MainClass extends JFrame {
 		sf.setBounds(0, 0, 900, 600);
 		contentPane.add(sf);
 		contentPane.setLayout(null);
+		
+		//For test
+		Ship sh = new Ship(3,4,2,true);
+		sf.addShips(sh);
 
 	}
 }
