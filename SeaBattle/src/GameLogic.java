@@ -18,8 +18,6 @@ public class GameLogic {
 			}	
 		}
 //		fieldArray1[0][0] = 1;
-//		fieldArray1[5][8] = 3;
-//		fieldArray2[3][9] = 1;
-//		fieldArray2[2][7] = 1;
+
 	}
 }

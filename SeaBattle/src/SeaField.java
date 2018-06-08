@@ -37,10 +37,10 @@ public class SeaField extends JPanel {
 		setFocusable(true); 
 		
 		try {
-		background = ImageIO.read(new File("/Users/mike/Documents/workspace/SeaBattle/src/Pics/water.png")); //TODO change PATH
-		shipPart = ImageIO.read(new File("/Users/mike/Documents/workspace/SeaBattle/src/Pics/gray_sqr.png"));
-		hitPart = ImageIO.read(new File("/Users/mike/Documents/workspace/SeaBattle/src/Pics/red_sqr.png"));
-		bomb = ImageIO.read(new File("/Users/mike/Documents/workspace/SeaBattle/src/Pics/bomb.png"));
+		background = ImageIO.read(new File("/Users/mike/Documents/GitHub/SeaBatleGame/SeaBattle/Pics/water.png")); //TODO change PATH
+		shipPart = ImageIO.read(new File("/Users/mike/Documents/GitHub/SeaBatleGame/SeaBattle/Pics/gray_sqr.png"));
+		hitPart = ImageIO.read(new File("/Users/mike/Documents/GitHub/SeaBatleGame/SeaBattle/Pics/red_sqr.png"));
+		bomb = ImageIO.read(new File("/Users/mike/Documents/GitHub/SeaBatleGame/SeaBattle/Pics/bomb.png"));
 		}catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("Change pictures directory!");
