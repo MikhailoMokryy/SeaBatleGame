@@ -175,7 +175,7 @@ public class SeaField extends JPanel {
 			if(((x>100)&&(y>100)&&(x<400)&&(y<400))||((x>500)&&(y>100)&&(x<800)&&(y<400))) 	
 		       	setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 			else
-                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                 setCursor(new Cursor(Cursor.HAND_CURSOR));
 			
 
 	
