@@ -1,0 +1,187 @@
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.io.File;
+
+import javax.imageio.ImageIO;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.JToolBar;
+
+public class SeaField extends JPanel {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Color DARK_BLUE = Color.BLUE.darker().darker().darker();
+	private Font font = new Font("Comic Sans MS",Font.BOLD,15);
+	private Image background,shipPart,hitPart,bomb;
+	private  Graphics2D g2d;
+	private GameLogic game;
+	private int x, y;
+	
+	public SeaField() {
+		game = new GameLogic();
+		game.startGame();
+	
+		addMouseListener(new MyMouseListener());
+		addMouseMotionListener(new MyMouseMotionListener());
+		setFocusable(true); 
+		
+		try {
+		background = ImageIO.read(new File("/Users/mike/Documents/workspace/SeaBattle/src/Pics/water.png")); //TODO change PATH
+		shipPart = ImageIO.read(new File("/Users/mike/Documents/workspace/SeaBattle/src/Pics/gray_sqr.png"));
+		hitPart = ImageIO.read(new File("/Users/mike/Documents/workspace/SeaBattle/src/Pics/red_sqr.png"));
+		bomb = ImageIO.read(new File("/Users/mike/Documents/workspace/SeaBattle/src/Pics/bomb.png"));
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Change pictures directory!");
+		}
+		
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+
+		super.paintComponent(g);
+	
+		 g2d=(Graphics2D)g;
+		 g2d.drawImage(background,0,0,900,600,null);
+
+		g2d.setFont(font.deriveFont(30f));
+		g2d.setColor(DARK_BLUE);
+
+		// Выведение надписей
+		g2d.drawString("Player 1", 190, 50);
+		g2d.drawString("Player 2", 590, 50);
+
+		for(int i = 0; i<10; i++) {
+			for(int k = 0; k<10; k++) {	
+				
+				if((game.fieldArray1[i][k]>=1)&&(game.fieldArray1[i][k]<=4)) {
+					g.drawImage(bomb, 100 + k * 30, 100 + i * 30, 30, 30, null);	
+				}
+				
+				if((game.fieldArray2[i][k]>=1)&&(game.fieldArray2[i][k]<=4)) {
+					g.drawImage(bomb, 500 + k * 30, 100 + i * 30, 30, 30, null);	
+				}
+					
+			}	
+		}
+		
+		
+		g2d.setColor(DARK_BLUE);
+		for (int i = 0; i <= 10; i++) {
+			g2d.drawLine(100 + i * 30, 100, 100 + i * 30, 400);
+			g2d.drawLine(100, 100 + i * 30, 400, 100 + i * 30);
+			g2d.drawLine(500 + i * 30, 100, 500 + i * 30, 400);
+			g2d.drawLine(500, 100 + i * 30, 800, 100 + i * 30);
+		}
+
+		g2d.setFont(font.deriveFont(20f));
+		
+		g2d.setColor(DARK_BLUE);
+		for (int i = 1; i <= 10; i++) {
+			String numb = Integer.toString(i);
+			g2d.drawString(numb, 73, 93 + i * 30);
+			g2d.drawString(numb, 473, 93 + i * 30);
+			g2d.drawString("" + (char) ('A' + i - 1), 78 + i * 30, 93);
+			g2d.drawString("" + (char) ('A' + i - 1), 478 + i * 30, 93);
+
+		}
+	}
+	
+	public class MyMouseListener implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			if((e.getButton() == 1)&&(e.getClickCount()==1)){
+				x = e.getX();
+				y = e.getY();
+				
+				if((x>100)&&(y>100)&&(x<400)&&(y<400)) {
+					
+					int i = (y-100)/30;
+					int k = (x-100)/30;
+					
+					game.fieldArray1[i][k] = 1;
+					repaint();
+					revalidate();
+				}
+				
+               if((x>500)&&(y>100)&&(x<800)&&(y<400)) {
+					
+					int i = (y-100)/30;
+					int k = (x-500)/30;
+					
+					game.fieldArray2[i][k] = 1;
+					repaint();
+					revalidate();
+				}
+				
+			}
+
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		
+	}
+	
+	public class MyMouseMotionListener implements MouseMotionListener {
+
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseMoved(MouseEvent e) {
+			x = e.getX();
+			y = e.getY();
+
+			if(((x>100)&&(y>100)&&(x<400)&&(y<400))||((x>500)&&(y>100)&&(x<800)&&(y<400))) 	
+		       	setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+			else
+                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			
+
+	
+		}
+		
+		
+	}
+
+}
