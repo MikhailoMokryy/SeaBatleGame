@@ -18,6 +18,23 @@ public class GameLogic {
 			}	
 		}
 //		fieldArray1[0][0] = 1;
-
+		
+		
 	}
+	
+	public void addShips(Ship sh) {
+		
+		
+		fieldArray1[sh.Xcor][sh.Ycor]=2;
+	if(sh.horizontal==true) {
+		for(int i = 0;i<sh.deckNum;i++) {
+			fieldArray1[sh.Xcor][sh.Ycor+i]=2;
+		}
+	}
+	if(sh.horizontal==false) {
+		for(int i = 0;i<sh.deckNum;i++) {
+			fieldArray1[sh.Xcor+i][sh.Ycor]=2;
+		}
+	}
+}
 }
