@@ -59,7 +59,6 @@ public class SeaField extends JPanel {
 		g2d.setFont(font.deriveFont(30f));
 		g2d.setColor(DARK_BLUE);
 
-		// Выведение надписей
 		g2d.drawString("Player 1", 190, 50);
 		g2d.drawString("Player 2", 590, 50);
 
