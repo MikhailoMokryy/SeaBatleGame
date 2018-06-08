@@ -28,6 +28,19 @@ public class SeaField extends JPanel {
 	private GameLogic game;
 	private int x, y;
 	
+	protected Ship deck4;
+	protected Ship deck3_1;
+	protected Ship deck3_2;
+	protected Ship deck2_1;
+	protected Ship deck2_2;
+	protected Ship deck2_3;
+	protected Ship deck1_1;
+	protected Ship deck1_2;
+	protected Ship deck1_3;
+	protected Ship deck1_4;
+	Ship[] flot={deck4,deck3_1,deck3_2,deck2_1,deck2_2,deck2_3,deck1_1,deck1_2,deck1_3,deck1_4};
+	
+	
 	public SeaField() {
 		game = new GameLogic();
 		game.startGame();
@@ -67,6 +80,13 @@ public class SeaField extends JPanel {
 				
 				if((game.fieldArray1[i][k]>=1)&&(game.fieldArray1[i][k]<=4)) {
 					g.drawImage(bomb, 100 + k * 30, 100 + i * 30, 30, 30, null);	
+				}
+				if((game.fieldArray1[i][k]==-2)) {
+					g.drawImage(shipPart, 100 + k * 30, 100 + i * 30, 30, 30, null);	
+				}
+				if((game.fieldArray1[i][k]==-1)) {
+					g.drawImage(hitPart, 100 + k * 30, 100 + i * 30, 30, 30, null);	
+					
 				}
 				
 				if((game.fieldArray2[i][k]>=1)&&(game.fieldArray2[i][k]<=4)) {
@@ -117,7 +137,12 @@ public class SeaField extends JPanel {
 					int i = (y-100)/30;
 					int k = (x-100)/30;
 					
+					if(game.fieldArray1[i][k] ==-2) {
+						game.fieldArray1[i][k] =-1;
+						
+					}else
 					game.fieldArray1[i][k] = 1;
+					
 					repaint();
 					revalidate();
 				}
@@ -182,5 +207,20 @@ public class SeaField extends JPanel {
 		
 		
 	}
+public void addShips(Ship sh) {
+		
+		
+		game.fieldArray1[sh.Xcor][sh.Ycor]=-2;
+	if(sh.horizontal==true) {
+		for(int i = 0;i<sh.deckNum;i++) {
+			game.fieldArray1[sh.Xcor][sh.Ycor+i]=-2;
+		}
+	}
+	if(sh.horizontal==false) {
+		for(int i = 0;i<sh.deckNum;i++) {
+			game.fieldArray1[sh.Xcor+i][sh.Ycor]=-2;
+		}
+	}
+}
 
 }
