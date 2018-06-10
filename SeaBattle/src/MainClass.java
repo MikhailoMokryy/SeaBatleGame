@@ -3,7 +3,10 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 public class MainClass extends JFrame {
 
@@ -11,11 +14,14 @@ public class MainClass extends JFrame {
 
 	/**
 	 * Launch the application.
+	 * @throws UnsupportedLookAndFeelException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args)  {
+			
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+			//		UIManager.setLookAndFeel(new NimbusLookAndFeel());
 					MainClass frame = new MainClass();
 					frame.setVisible(true);
 					frame.setResizable(false);
@@ -26,6 +32,7 @@ public class MainClass extends JFrame {
 		});
 	}
 
+	
 	/**
 	 * Create the frame.
 	 */
@@ -41,11 +48,6 @@ public class MainClass extends JFrame {
 		sf.setBounds(0, 0, 900, 600);
 		contentPane.add(sf);
 		contentPane.setLayout(null);
-		
-		//For test
-		sf.deck3_1 = new Ship(3,4,2,true);
-		sf.addShips(sf.deck3_1);
-		
 
 	}
 }
