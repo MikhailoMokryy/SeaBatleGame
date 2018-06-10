@@ -4,16 +4,16 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
-
 import javax.imageio.ImageIO;
-import javax.swing.JLabel;
+import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.JToolBar;
+
 
 public class SeaField extends JPanel {
 
@@ -27,6 +27,7 @@ public class SeaField extends JPanel {
 	private  Graphics2D g2d;
 	private GameLogic game;
 	private int x, y;
+	private JButton newGameBtn;
 	
 	protected Ship deck4;
 	protected Ship deck3_1;
@@ -38,13 +39,23 @@ public class SeaField extends JPanel {
 	protected Ship deck1_2;
 	protected Ship deck1_3;
 	protected Ship deck1_4;
-	Ship[] flot={deck4,deck3_1,deck3_2,deck2_1,deck2_2,deck2_3,deck1_1,deck1_2,deck1_3,deck1_4};
+	private enum ShipsOnFirstDeck { deck4,deck3_1,deck3_2,deck2_1,deck2_2,deck2_3,deck1_1,deck1_2,deck1_3,deck1_4       };
+
+	
 	
 	
 	public SeaField() {
+		
+		
 		game = new GameLogic();
 		game.startGame();
 	
+		game.fillField(game.fieldArray1,true);
+		game.fillField(game.fieldArray2,true);
+		
+
+		
+
 		addMouseListener(new MyMouseListener());
 		addMouseMotionListener(new MyMouseMotionListener());
 		setFocusable(true); 
@@ -58,6 +69,17 @@ public class SeaField extends JPanel {
 			e.printStackTrace();
 			System.err.println("Change pictures directory!");
 		}
+		
+		setLayout(null);
+		MyActionListener action = new MyActionListener();
+        
+		newGameBtn = new JButton();
+		newGameBtn.setText("New Game");
+		newGameBtn.setForeground(DARK_BLUE);
+		newGameBtn.setFont(font);
+		newGameBtn.setBounds(170, 450, 150, 60);
+		newGameBtn.addActionListener(action);
+		add(newGameBtn);
 		
 	}
 
@@ -78,19 +100,30 @@ public class SeaField extends JPanel {
 		for(int i = 0; i<10; i++) {
 			for(int k = 0; k<10; k++) {	
 				
-				if((game.fieldArray1[i][k]>=1)&&(game.fieldArray1[i][k]<=4)) {
-					g.drawImage(bomb, 100 + k * 30, 100 + i * 30, 30, 30, null);	
-				}
-				if((game.fieldArray1[i][k]==-2)) {
+				if(game.fieldArray1[i][k]==1) {
 					g.drawImage(shipPart, 100 + k * 30, 100 + i * 30, 30, 30, null);	
-				}
-				if((game.fieldArray1[i][k]==-1)) {
-					g.drawImage(hitPart, 100 + k * 30, 100 + i * 30, 30, 30, null);	
-					
+			
 				}
 				
-				if((game.fieldArray2[i][k]>=1)&&(game.fieldArray2[i][k]<=4)) {
-					g.drawImage(bomb, 500 + k * 30, 100 + i * 30, 30, 30, null);	
+				if(game.fieldArray1[i][k]==-1) {
+					g.drawImage(bomb, 100 + k * 30, 100 + i * 30, 30, 30, null);				
+				}
+				
+				if(game.fieldArray1[i][k]==-2) {
+					g.drawImage(hitPart, 100 + k * 30, 100 + i * 30, 30, 30, null);				
+				}
+				
+				
+				if(game.fieldArray2[i][k]==1) {
+					g.drawImage(shipPart, 500 + k * 30, 100 + i * 30, 30, 30, null);	
+				}
+				
+				if(game.fieldArray2[i][k]==-1) {
+					g.drawImage(bomb, 500 + k * 30, 100 + i * 30, 30, 30, null);				
+				}
+				
+				if(game.fieldArray2[i][k]==-2) {
+					g.drawImage(hitPart, 500 + k * 30, 100 + i * 30, 30, 30, null);				
 				}
 					
 			}	
@@ -137,22 +170,29 @@ public class SeaField extends JPanel {
 					int i = (y-100)/30;
 					int k = (x-100)/30;
 					
-					if(game.fieldArray1[i][k] ==-2) {
-						game.fieldArray1[i][k] =-1;
+					if((game.fieldArray1[i][k]==1)) {
+						game.fieldArray1[i][k] =-2;
 						
-					}else
-					game.fieldArray1[i][k] = 1;
+					}else if(game.fieldArray1[i][k]==0)
+					   game.fieldArray1[i][k]= -1;
 					
 					repaint();
 					revalidate();
 				}
+				
 				
                if((x>500)&&(y>100)&&(x<800)&&(y<400)) {
 					
 					int i = (y-100)/30;
 					int k = (x-500)/30;
 					
-					game.fieldArray2[i][k] = 1;
+					
+					if((game.fieldArray2[i][k]==1)) {
+						game.fieldArray2[i][k] =-2;
+						
+					}else if(game.fieldArray2[i][k]==0)
+					   game.fieldArray2[i][k]= -1;
+				
 					repaint();
 					revalidate();
 				}
@@ -200,27 +240,26 @@ public class SeaField extends JPanel {
 		       	setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 			else
                  setCursor(new Cursor(Cursor.HAND_CURSOR));
-			
-
+		}
+	}
 	
+	
+
+	private class MyActionListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+
+			 if(e.getSource().equals(newGameBtn)) {
+			  
+         	    game.startGame();
+        		    game.fillField(game.fieldArray1,true);
+        		    game.fillField(game.fieldArray2,true);
+            } 
+			 
+			 repaint();
+			 revalidate(); 
 		}
-		
-		
 	}
-public void addShips(Ship sh) {
-		
-		
-		game.fieldArray1[sh.Xcor][sh.Ycor]=-2;
-	if(sh.horizontal==true) {
-		for(int i = 0;i<sh.deckNum;i++) {
-			game.fieldArray1[sh.Xcor][sh.Ycor+i]=-2;
-		}
-	}
-	if(sh.horizontal==false) {
-		for(int i = 0;i<sh.deckNum;i++) {
-			game.fieldArray1[sh.Xcor+i][sh.Ycor]=-2;
-		}
-	}
-}
+	
 
 }
