@@ -29,31 +29,14 @@ public class SeaField extends JPanel {
 	private int x, y;
 	private JButton newGameBtn;
 	
-	protected Ship deck4;
-	protected Ship deck3_1;
-	protected Ship deck3_2;
-	protected Ship deck2_1;
-	protected Ship deck2_2;
-	protected Ship deck2_3;
-	protected Ship deck1_1;
-	protected Ship deck1_2;
-	protected Ship deck1_3;
-	protected Ship deck1_4;
-	private enum ShipsOnFirstDeck { deck4,deck3_1,deck3_2,deck2_1,deck2_2,deck2_3,deck1_1,deck1_2,deck1_3,deck1_4       };
-
-	
-	
 	
 	public SeaField() {
 		
 		
 		game = new GameLogic();
 		game.startGame();
-	
 		game.fillField(game.fieldArray1,true);
 		game.fillField(game.fieldArray2,true);
-		
-
 		
 
 		addMouseListener(new MyMouseListener());
@@ -76,7 +59,7 @@ public class SeaField extends JPanel {
 		newGameBtn = new JButton();
 		newGameBtn.setText("New Game");
 		newGameBtn.setForeground(DARK_BLUE);
-		newGameBtn.setFont(font);
+		newGameBtn.setFont(font.deriveFont(20f));
 		newGameBtn.setBounds(170, 450, 150, 60);
 		newGameBtn.addActionListener(action);
 		add(newGameBtn);

@@ -16,12 +16,12 @@ public class MainClass extends JFrame {
 	 * Launch the application.
 	 * @throws UnsupportedLookAndFeelException 
 	 */
-	public static void main(String[] args) throws UnsupportedLookAndFeelException {
-		
-		UIManager.setLookAndFeel(new NimbusLookAndFeel());
+	public static void main(String[] args)  {
+			
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+			//		UIManager.setLookAndFeel(new NimbusLookAndFeel());
 					MainClass frame = new MainClass();
 					frame.setVisible(true);
 					frame.setResizable(false);

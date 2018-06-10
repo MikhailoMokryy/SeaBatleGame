@@ -20,7 +20,6 @@ public class GameLogic {
 				fieldArray2[i][k] = 0;
 			}	
 		}
-//		fieldArray1[0][0] = 1;	
 	}
 
 	
@@ -118,7 +117,8 @@ private boolean setShip (int row, int column,int health,  boolean orientation,in
 	    addShipsOnDeck(new Ship(row,column,health, orientation), fieldArray);	
 	return isSet;
 }
-	
+
+
 private int getShipsSize(int i) {
 	if (i<=3) return 1;
 	else if(i<=6) return 2;
