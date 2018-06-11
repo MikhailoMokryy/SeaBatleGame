@@ -129,15 +129,23 @@ private boolean setShip (int row, int column,int health,  boolean orientation,in
 }
 
 public void sendShoot(int row, int column,int[][] fieldArray) {
-	
+	           ArrayList <Ship> shipArray = new ArrayList <Ship>();
+	           int field;
 				if(fieldArray.equals(fieldArray1)) {
-					for(Ship s : shipArray1) {
+					shipArray = shipArray1;
+					field = 1;
+				}else {
+					shipArray = shipArray2;
+					field = 2;
+				}
+				
+					for(Ship s : shipArray) {
 						if(s.isHorizontal()) {
 							for(int i = 0;i<s.getDeckNum();i++) {		
 								if(s.getXcor()==row&&(s.getYcor()+i)==column) {
 									if(s.getHealth()>1)
 									s.setHealth(s.getHealth()-1);
-									else System.out.println(s.getDeckNum()+" - killed horizontal 1 ");		
+									else System.out.println(s.getDeckNum()+" - killed horizontal Field:" +field);		
 								}
 							}
 						}
@@ -146,34 +154,13 @@ public void sendShoot(int row, int column,int[][] fieldArray) {
 								if((s.getXcor()+i)==row&&s.getYcor()==column) {
 									if(s.getHealth()>1)
 									s.setHealth(s.getHealth()-1);
-									else System.out.println(s.getDeckNum()+" - killed vertical 1 ");
+									else System.out.println(s.getDeckNum()+" - killed vertical Field:" +field);
 								}
 							}
 						}
 					}
 					
-				}else {
-					for(Ship s : shipArray2) {
-						if(s.isHorizontal()) {
-							for(int i = 0;i<s.getDeckNum();i++) {		
-								if(s.getXcor()==row&&(s.getYcor()+i)==column) {
-									if(s.getHealth()>1)
-									s.setHealth(s.getHealth()-1);
-									else System.out.println(s.getDeckNum()+" - killed horizontal 2 ");		
-								}
-							}
-						}
-						if(!s.isHorizontal()) {
-							for(int i = 0;i<s.getDeckNum();i++) {				
-								if((s.getXcor()+i)==row&&s.getYcor()==column) {
-									if(s.getHealth()>1)
-									s.setHealth(s.getHealth()-1);
-									else System.out.println(s.getDeckNum()+" - killed vertical 2 ");
-								}
-							}
-						}
-					}	
-	}
+	
 
 }
 
