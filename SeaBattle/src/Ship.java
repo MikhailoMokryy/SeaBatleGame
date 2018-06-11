@@ -21,17 +21,7 @@ public class Ship {
 		this.horizontal=alighment;
 	}
 	
-	
-	public boolean isKilled(){	
-			if(health>0)
-				return false;
-		return true;
-	}
-	
-	
-	public void shoot() {
-		health--;
-	}
+
 
 
 	/**
