@@ -185,10 +185,10 @@ public class SeaField extends JPanel {
 
 						int i = (y - 100) / 30;
 						int k = (x - 500) / 30;
-						pl="<=";
+						
 						if ((game.fieldArray2[i][k] == 1)) {
 							game.fieldArray2[i][k] = -2;
-
+							pl="<=";
 							if (prog == 2) {
 								pl="=>";
 								turn++;
@@ -205,7 +205,7 @@ public class SeaField extends JPanel {
 
 						} else if (game.fieldArray2[i][k] == 0) {
 							game.fieldArray2[i][k] = -1;
-
+							pl="<=";
 							if(prog==2) {
 								pl="=>";
 								turn++;
