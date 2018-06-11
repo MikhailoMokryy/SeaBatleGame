@@ -2,7 +2,7 @@
 import java.util.Random;
 
 /**
- * Computer intelligence
+ * Computer intelligence smart 
  */
 public class Comp2 {
 
