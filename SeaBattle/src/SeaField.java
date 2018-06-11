@@ -156,9 +156,9 @@ public class SeaField extends JPanel {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			if ((e.getButton() == 1) && (e.getClickCount() == 1)) {
-			if (turn % 2 == 0) {
-				if (prog == 1) {
-					
+				if (turn % 2 == 0) {
+					if (prog == 1) {
+
 						x = e.getX();
 						y = e.getY();
 
@@ -173,26 +173,26 @@ public class SeaField extends JPanel {
 
 							} else if (game.fieldArray1[i][k] == 0)
 								game.fieldArray1[i][k] = -1;
-						
+
 							pl = "=>";
 							turn++;
 							repaint();
 							revalidate();
+						}
 					}
-				}
 				} else {
 
 					if ((x > 500) && (y > 100) && (x < 800) && (y < 400)) {
 
 						int i = (y - 100) / 30;
 						int k = (x - 500) / 30;
-						
+
 						if ((game.fieldArray2[i][k] == 1)) {
 							game.fieldArray2[i][k] = -2;
 							game.sendShoot(i, k, game.fieldArray2);
-							pl="<=";
+							pl = "<=";
 							if (prog == 2) {
-								pl="=>";
+								pl = "=>";
 								turn++;
 								robot.tryShot();
 								i = robot.getX();
@@ -208,35 +208,30 @@ public class SeaField extends JPanel {
 
 						} else if (game.fieldArray2[i][k] == 0) {
 							game.fieldArray2[i][k] = -1;
-							pl="<=";
-							if(prog==2) {
-								pl="=>";
+							pl = "<=";
+							if (prog == 2) {
+								pl = "=>";
 								turn++;
-							 robot.tryShot();
-							 i=robot.getX();
-							 k=robot.getY();
-							 if((game.fieldArray1[i][k]==1)) {
-							 game.fieldArray1[i][k] =-2;
-							  game.sendShoot(i, k, game.fieldArray1);
-							 }else if(game.fieldArray1[i][k]==0)
-							 game.fieldArray1[i][k]= -1;
+								robot.tryShot();
+								i = robot.getX();
+								k = robot.getY();
+								if ((game.fieldArray1[i][k] == 1)) {
+									game.fieldArray1[i][k] = -2;
+									game.sendShoot(i, k, game.fieldArray1);
+								} else if (game.fieldArray1[i][k] == 0)
+									game.fieldArray1[i][k] = -1;
 							}
 							turn++;
 						}
-						
-						
+
 						repaint();
 						revalidate();
 					}
 
 				}
 
-			
-			
-			
-			
+			}
 		}
-	}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
@@ -301,7 +296,7 @@ public class SeaField extends JPanel {
 				pl = "=>";
 				prog = 1;
 			}
-			
+
 			repaint();
 			revalidate();
 		}

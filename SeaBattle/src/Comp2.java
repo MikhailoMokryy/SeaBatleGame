@@ -2,7 +2,7 @@
 import java.util.Random;
 
 /**
- * Computer intelligence smart 
+ * Computer intelligence smart
  */
 public class Comp2 {
 
@@ -18,36 +18,36 @@ public class Comp2 {
 		this.rand = new Random();
 	}
 
-	private boolean checkInjured(int x,int y) {
-		if(y<9) {
-			if(fieldArray[x][y + 1] == -2)
-				if(checkUp(x,y))
+	private boolean checkInjured(int x, int y) {
+		if (y < 9) {
+			if (fieldArray[x][y + 1] == -2)
+				if (checkUp(x, y))
 					return true;
 		}
-			
-		if(y>0) {
-			if(fieldArray[x][y - 1] == -2)
-					if(checkDown(x,y))
-						return true;
-				}
-		if(x<9) {
-			if(fieldArray[x+1][y] == -2) 
-					if(checkLeft(x,y))
-						return true;
-				}
-					
-		if(x>0) {			
-			if(fieldArray[x-1][y] == -2)
-				 if(checkRight(x,y))
-					 return true;
+
+		if (y > 0) {
+			if (fieldArray[x][y - 1] == -2)
+				if (checkDown(x, y))
+					return true;
+		}
+		if (x < 9) {
+			if (fieldArray[x + 1][y] == -2)
+				if (checkLeft(x, y))
+					return true;
+		}
+
+		if (x > 0) {
+			if (fieldArray[x - 1][y] == -2)
+				if (checkRight(x, y))
+					return true;
 		}
 		return false;
 	}
 
 	private boolean checkAround(int x, int y) {
-		if(checkInjured(x, y))
+		if (checkInjured(x, y))
 			return true;
-		
+
 		if (checkUp(x, y)) {
 			return true;
 		} else if (checkDown(x, y)) {
@@ -151,7 +151,7 @@ public class Comp2 {
 				y = rand.nextInt(10);
 			}
 		}
-		if (cleverLvl == 2||cleverLvl==3) {
+		if (cleverLvl == 2 || cleverLvl == 3) {
 			boolean stop = true;
 
 			for (int j = 0; j < 10; j++) {
@@ -165,18 +165,18 @@ public class Comp2 {
 				}
 
 				if (stop) {
-//					x = rand.nextInt(10);
-//					y = rand.nextInt(10);
-					if(cleverLvl==3) {
+					// x = rand.nextInt(10);
+					// y = rand.nextInt(10);
+					if (cleverLvl == 3) {
 						while (fieldArray[x][y] != 1) {
 							x = rand.nextInt(10);
 							y = rand.nextInt(10);
 						}
-					}else {
-					while (fieldArray[x][y] == -1 || fieldArray[x][y] == -2) {
-						x = rand.nextInt(10);
-						y = rand.nextInt(10);
-					}
+					} else {
+						while (fieldArray[x][y] == -1 || fieldArray[x][y] == -2) {
+							x = rand.nextInt(10);
+							y = rand.nextInt(10);
+						}
 					}
 				}
 			}

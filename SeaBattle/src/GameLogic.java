@@ -99,12 +99,6 @@ public void fillField (int[][] fieldArray, boolean isRandom) {
 		}
 		while (isRepeat);
 	}
-	
-//	for(Ship s : shipArray1) {
-//		System.out.println(s.getHealth()+" "+s.getDeckNum());
-//	}
-
-
 }
 
 // Checking of opportunity to set ship by coordinates by row or column
@@ -145,7 +139,7 @@ public void sendShoot(int row, int column,int[][] fieldArray) {
 								if(s.getXcor()==row&&(s.getYcor()+i)==column) {
 									if(s.getHealth()>1)
 									s.setHealth(s.getHealth()-1);
-									else System.out.println(s.getDeckNum()+" - killed horizontal Field:" +field);		
+									else { System.out.println(s.getDeckNum()+" - killed horizontal Field:" +field);	setFieldAroundShip (s, fieldArray); }
 								}
 							}
 						}
@@ -154,15 +148,59 @@ public void sendShoot(int row, int column,int[][] fieldArray) {
 								if((s.getXcor()+i)==row&&s.getYcor()==column) {
 									if(s.getHealth()>1)
 									s.setHealth(s.getHealth()-1);
-									else System.out.println(s.getDeckNum()+" - killed vertical Field:" +field);
+									else {System.out.println(s.getDeckNum()+" - killed vertical Field:" +field);  setFieldAroundShip (s, fieldArray); }
 								}
 							}
 						}
 					}
-					
-	
-
 }
+
+
+private void setFieldAroundShip (Ship s, int[][] fieldArray) {
+	
+	  if(s.isHorizontal()) {
+		for(int i = 0;i<s.getDeckNum();i++) {
+			if ((s.getXcor() > 0) && (fieldArray[s.getXcor()-1][s.getYcor()] != -1))
+				fieldArray[s.getXcor()-1][s.getYcor()+i] = -1;
+			else if ((s.getXcor() > 0) && (s.getYcor() < 9) && (fieldArray[s.getXcor()-1][s.getYcor()+1] != -1))
+				fieldArray[s.getXcor()-1][s.getYcor()+1+i] = -1;
+			else if ((s.getYcor() < 9) && (fieldArray[s.getXcor()][s.getYcor()+1] != -1))
+				fieldArray[s.getXcor()][s.getYcor()+1+i] = -1;
+			else  if ((s.getXcor() < 9) && (s.getYcor() < 9) && (fieldArray[s.getXcor()+1][s.getYcor()+1] != -1))
+				fieldArray[s.getXcor()+1][s.getYcor()+1+i] = -1;
+			else  if ((s.getXcor() < 9) && (fieldArray[s.getXcor()+1][s.getYcor()] != -1))
+				fieldArray[s.getXcor()+1][s.getYcor()+i] = -1;
+			else  if ((s.getXcor() < 9) && (s.getYcor() > 0) && (fieldArray[s.getXcor()+1][s.getYcor()-1] != -1))
+				fieldArray[s.getXcor()+1][s.getYcor()-1+i] = -1;
+			else  if ((s.getYcor() > 0) && (fieldArray[s.getXcor()][s.getYcor()-1] != -1))
+				fieldArray[s.getXcor()][s.getYcor()-1+i] = -1;
+			else  if ((s.getXcor() > 0) && (s.getYcor() > 0) && (fieldArray[s.getXcor()-1][s.getYcor()-1] != -1))
+				fieldArray[s.getXcor()-1][s.getYcor()-1+i] = -1;	
+		}
+	}
+   	if(!s.isHorizontal()) {
+		for(int i = 0;i<s.getDeckNum();i++) {
+			if ((s.getXcor() > 0) && (fieldArray[s.getXcor()-1][s.getYcor()] != -1))
+				fieldArray[s.getXcor()-1+i][s.getYcor()] = -1;
+			else if ((s.getXcor() > 0) && (s.getYcor() < 9) && (fieldArray[s.getXcor()-1][s.getYcor()+1] != -1))
+				fieldArray[s.getXcor()-1+i][s.getYcor()+1] = -1;
+			else if ((s.getYcor() < 9) && (fieldArray[s.getXcor()][s.getYcor()+1] != -1))
+				fieldArray[s.getXcor()+i][s.getYcor()+1] = -1;
+			else  if ((s.getXcor() < 9) && (s.getYcor() < 9) && (fieldArray[s.getXcor()+1][s.getYcor()+1] != -1))
+				fieldArray[s.getXcor()+1+i][s.getYcor()+1] = -1;
+			else  if ((s.getXcor() < 9) && (fieldArray[s.getXcor()+1][s.getYcor()] != -1))
+				fieldArray[s.getXcor()+1+i][s.getYcor()] = -1;
+			else  if ((s.getXcor() < 9) && (s.getYcor() > 0) && (fieldArray[s.getXcor()+1][s.getYcor()-1] != -1))
+				fieldArray[s.getXcor()+1+i][s.getYcor()-1] = -1;
+			else  if ((s.getYcor() > 0) && (fieldArray[s.getXcor()][s.getYcor()-1] != -1))
+				fieldArray[s.getXcor()+i][s.getYcor()-1] = -1;
+			else  if ((s.getXcor() > 0) && (s.getYcor() > 0) && (fieldArray[s.getXcor()-1][s.getYcor()-1] != -1))
+				fieldArray[s.getXcor()-1+i][s.getYcor()-1] = -1;	
+		}
+	}
+	
+		
+	}
 
 private int getShipsSize(int i) {
 	if (i<=3) return 1;

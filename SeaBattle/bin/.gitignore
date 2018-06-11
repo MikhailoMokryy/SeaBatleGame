@@ -1,12 +1,7 @@
-/.DS_Store
-/GameLogic.class
 /MainClass$1.class
 /MainClass.class
+/SeaField$MyActionListener.class
 /SeaField$MyMouseListener.class
 /SeaField$MyMouseMotionListener.class
 /SeaField.class
 /Ship.class
-/SeaField$ShipsOnFirstDeck.class
-/SeaField$MyActionListener.class
-/Comp.class
-/Comp2.class
