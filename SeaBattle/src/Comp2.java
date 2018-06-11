@@ -7,29 +7,57 @@ import java.util.Random;
 public class Comp2 {
 
 	private int[][] fieldArray;
-	
+
 	private int x, y;
 	private int cleverLvl;
 	Random rand;
 
-	
 	public Comp2(int[][] fieldArray, int lvl) {
 		this.fieldArray = fieldArray;
 		cleverLvl = lvl;
 		this.rand = new Random();
 	}
 
-	
-	private boolean checkAround(int x, int y) {
-		if (checkUp(x, y))
-			return true;
-		if (checkDown(x, y))
-			return true;
-		if (checkRight(x, y))
-			return true;
-		if (checkLeft(x, y))
-			return true;
+	private boolean checkInjured(int x,int y) {
+		if(y<9) {
+			if(fieldArray[x][y + 1] == -2)
+				if(checkUp(x,y))
+					return true;
+		}
+			
+		if(y>0) {
+			if(fieldArray[x][y - 1] == -2)
+					if(checkDown(x,y))
+						return true;
+				}
+		if(x<9) {
+			if(fieldArray[x+1][y] == -2) 
+					if(checkLeft(x,y))
+						return true;
+				}
+					
+		if(x>0) {			
+			if(fieldArray[x-1][y] == -2)
+				 if(checkRight(x,y))
+					 return true;
+		}
 		return false;
+	}
+
+	private boolean checkAround(int x, int y) {
+		if(checkInjured(x, y))
+			return true;
+		
+		if (checkUp(x, y)) {
+			return true;
+		} else if (checkDown(x, y)) {
+			return true;
+		} else if (checkRight(x, y)) {
+			return true;
+		} else if (checkLeft(x, y)) {
+			return true;
+		} else
+			return false;
 	}
 
 	private boolean checkDown(int x, int y) {
@@ -39,8 +67,8 @@ public class Comp2 {
 					// this.x = x;
 					//
 					// this.y = y + 2;
-					
-					return checkDown(x,y+1);
+
+					return checkDown(x, y + 1);
 				} else {
 					this.x = x;
 					this.y = y + 1;
@@ -58,7 +86,7 @@ public class Comp2 {
 					// this.x = x;
 					//
 					// this.y = y - 2;
-					return checkUp(x,y-1);
+					return checkUp(x, y - 1);
 				} else {
 					this.x = x;
 					this.y = y - 1;
@@ -79,7 +107,7 @@ public class Comp2 {
 					// return false;
 					// }
 					// this.y = y;
-					return checkRight(x+1,y);
+					return checkRight(x + 1, y);
 				} else {
 					this.x = x + 1;
 					this.y = y;
@@ -100,7 +128,7 @@ public class Comp2 {
 					// this.x = x + 1;
 					// }
 					// this.y = y;
-					return checkLeft(x-1,y);
+					return checkLeft(x - 1, y);
 				} else {
 					this.x = x - 1;
 					this.y = y;
@@ -112,7 +140,8 @@ public class Comp2 {
 		return false;
 
 	}
-// try to make a shot
+
+	// try to make a shot
 	public void tryShot() {
 		x = rand.nextInt(10);
 		y = rand.nextInt(10);
@@ -124,25 +153,25 @@ public class Comp2 {
 		}
 		if (cleverLvl == 2) {
 			boolean stop = true;
-			
-				for (int j = 0; j < 10; j++) {
-					for (int i = 0; i < 10; i++) {
-						if (fieldArray[j][i] == -2) {
-							if (checkAround(j, i)) {
-								stop=false;
-								break;
-							}
+
+			for (int j = 0; j < 10; j++) {
+				for (int i = 0; i < 10; i++) {
+					if (fieldArray[j][i] == -2) {
+						if (checkAround(j, i)) {
+							stop = false;
+							break;
 						}
 					}
-				
-				if(stop) {
+				}
+
+				if (stop) {
 					x = rand.nextInt(10);
 					y = rand.nextInt(10);
 					while (fieldArray[x][y] == -1 || fieldArray[x][y] == -2) {
 						x = rand.nextInt(10);
 						y = rand.nextInt(10);
 					}
-					
+
 				}
 			}
 		}
