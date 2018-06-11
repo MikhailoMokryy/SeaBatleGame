@@ -116,7 +116,7 @@ public class Comp {
 		x = rand.nextInt(10);
 		y = rand.nextInt(10);
 		if (cleverLvl == 1) {
-			while (fieldArray[x][y] == -1 && fieldArray[x][y] == -2) {
+			while (fieldArray[x][y] == -1 || fieldArray[x][y] == -2) {
 				x = rand.nextInt(10);
 				y = rand.nextInt(10);
 			}
@@ -137,7 +137,7 @@ public class Comp {
 				if(stop) {
 					x = rand.nextInt(10);
 					y = rand.nextInt(10);
-					while (fieldArray[x][y] == -1 && fieldArray[x][y] == -2) {
+					while (fieldArray[x][y] == -1 || fieldArray[x][y] == -2) {
 						x = rand.nextInt(10);
 						y = rand.nextInt(10);
 					}

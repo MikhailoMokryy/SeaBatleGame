@@ -174,18 +174,30 @@ public class SeaField extends JPanel {
 					if((game.fieldArray2[i][k]==1)) {
 						game.fieldArray2[i][k] =-2;
 						
-					}else if(game.fieldArray2[i][k]==0)
-					   game.fieldArray2[i][k]= -1;
-					
-					robot.tryShot();
-					i=robot.getX();
-					k=robot.getY();
-					if((game.fieldArray1[i][k]==1)) {
-						game.fieldArray1[i][k] =-2;
+						robot.tryShot();
+						i=robot.getX();
+						k=robot.getY();
+						if((game.fieldArray1[i][k]==1)) {
+							game.fieldArray1[i][k] =-2;
+							
+						}else if(game.fieldArray1[i][k]==0)
+						   game.fieldArray1[i][k]= -1;
+
 						
-					}else if(game.fieldArray1[i][k]==0)
-					   game.fieldArray1[i][k]= -1;
-				
+					}else if(game.fieldArray2[i][k]==0) {
+					   game.fieldArray2[i][k]= -1;
+					   
+					   robot.tryShot();
+						i=robot.getX();
+						k=robot.getY();
+						if((game.fieldArray1[i][k]==1)) {
+							game.fieldArray1[i][k] =-2;
+							
+						}else if(game.fieldArray1[i][k]==0)
+						   game.fieldArray1[i][k]= -1;
+
+					}
+									
 					repaint();
 					revalidate();
 				}
