@@ -28,6 +28,7 @@ public class SeaField extends JPanel {
 	private GameLogic game;
 	private int x, y;
 	private JButton newGameBtn;
+	private Comp robot;
 	
 	
 	public SeaField() {
@@ -37,7 +38,7 @@ public class SeaField extends JPanel {
 		game.startGame();
 		game.fillField(game.fieldArray1,true);
 		game.fillField(game.fieldArray2,true);
-		
+		robot = new Comp(game.fieldArray1,2);
 
 		addMouseListener(new MyMouseListener());
 		addMouseMotionListener(new MyMouseMotionListener());
@@ -175,6 +176,15 @@ public class SeaField extends JPanel {
 						
 					}else if(game.fieldArray2[i][k]==0)
 					   game.fieldArray2[i][k]= -1;
+					
+					robot.tryShot();
+					i=robot.getX();
+					k=robot.getY();
+					if((game.fieldArray1[i][k]==1)) {
+						game.fieldArray1[i][k] =-2;
+						
+					}else if(game.fieldArray1[i][k]==0)
+					   game.fieldArray1[i][k]= -1;
 				
 					repaint();
 					revalidate();
