@@ -151,7 +151,7 @@ public class Comp2 {
 				y = rand.nextInt(10);
 			}
 		}
-		if (cleverLvl == 2) {
+		if (cleverLvl == 2||cleverLvl==3) {
 			boolean stop = true;
 
 			for (int j = 0; j < 10; j++) {
@@ -165,13 +165,19 @@ public class Comp2 {
 				}
 
 				if (stop) {
-					x = rand.nextInt(10);
-					y = rand.nextInt(10);
+//					x = rand.nextInt(10);
+//					y = rand.nextInt(10);
+					if(cleverLvl==3) {
+						while (fieldArray[x][y] != 1) {
+							x = rand.nextInt(10);
+							y = rand.nextInt(10);
+						}
+					}else {
 					while (fieldArray[x][y] == -1 || fieldArray[x][y] == -2) {
 						x = rand.nextInt(10);
 						y = rand.nextInt(10);
 					}
-
+					}
 				}
 			}
 		}

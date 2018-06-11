@@ -28,7 +28,7 @@ public class SeaField extends JPanel {
 	private GameLogic game;
 	private int x, y;
 	private JButton newGameBtn;
-	private Comp robot;
+	private Comp2 robot;
 	
 	
 	public SeaField() {
@@ -38,7 +38,7 @@ public class SeaField extends JPanel {
 		game.startGame();
 		game.fillField(game.fieldArray1,true);
 		game.fillField(game.fieldArray2,true);
-		robot = new Comp(game.fieldArray1,2);
+		robot = new Comp2(game.fieldArray1,3);
 
 		addMouseListener(new MyMouseListener());
 		addMouseMotionListener(new MyMouseMotionListener());
