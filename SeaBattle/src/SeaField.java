@@ -34,6 +34,8 @@ public class SeaField extends JPanel {
 	private int turn;
 	private String pl;
 	private int prog;
+	private boolean field1Vis;
+	private boolean field2Vis;
 
 	public SeaField() {
 
@@ -45,6 +47,8 @@ public class SeaField extends JPanel {
 		turn = 1;
 		pl = "=>";
 		prog = 2;
+		field1Vis=true;
+		field2Vis=false;
 
 		addMouseListener(new MyMouseListener());
 		addMouseMotionListener(new MyMouseMotionListener());
@@ -112,12 +116,13 @@ public class SeaField extends JPanel {
 
 		for (int i = 0; i < 10; i++) {
 			for (int k = 0; k < 10; k++) {
-
+				
+				if(field1Vis) {
 				if (game.fieldArray1[i][k] == 1) {
 					g.drawImage(shipPart, 100 + k * 30, 100 + i * 30, 30, 30, null);
 
 				}
-
+				}
 				if (game.fieldArray1[i][k] == -1) {
 					g.drawImage(bomb, 100 + k * 30, 100 + i * 30, 30, 30, null);
 				}
@@ -125,11 +130,13 @@ public class SeaField extends JPanel {
 				if (game.fieldArray1[i][k] == -2) {
 					g.drawImage(hitPart, 100 + k * 30, 100 + i * 30, 30, 30, null);
 				}
-
+				
+				if(field2Vis) {
 				if (game.fieldArray2[i][k] == 1) {
 					g.drawImage(shipPart, 500 + k * 30, 100 + i * 30, 30, 30, null);
 				}
-
+				}
+				
 				if (game.fieldArray2[i][k] == -1) {
 					g.drawImage(bomb, 500 + k * 30, 100 + i * 30, 30, 30, null);
 				}
@@ -352,6 +359,8 @@ public class SeaField extends JPanel {
 				pl = "=>";
 				prog = 2;
 				robot.setCleverLvl(1);
+				field1Vis=true;
+				field2Vis=false;
 			}
 			if (e.getSource().equals(newGamePVE2)) {
 
@@ -362,6 +371,8 @@ public class SeaField extends JPanel {
 				pl = "=>";
 				prog = 2;
 				robot.setCleverLvl(2);
+				field1Vis=true;
+				field2Vis=false;
 			}
 			if (e.getSource().equals(newGamePVE3)) {
 
@@ -372,6 +383,8 @@ public class SeaField extends JPanel {
 				pl = "=>";
 				prog = 2;
 				robot.setCleverLvl(3);
+				field1Vis=true;
+				field2Vis=false;
 			}
 			if (e.getSource().equals(newGamePVP)) {
 
@@ -381,6 +394,8 @@ public class SeaField extends JPanel {
 				turn = 1;
 				pl = "=>";
 				prog = 1;
+				field1Vis=true;
+				field2Vis=true;
 			}
 
 			repaint();
