@@ -204,19 +204,26 @@ public class SeaField extends JPanel {
 								
 								if ((game.fieldArray1[i][k] == 1)) {
 									//one more shot
-									while(game.fieldArray1[i][k] == 1) {
-										
-										game.fieldArray1[i][k] = -2;
-										game.sendShoot(i, k, game.fieldArray1);
-										robot.tryShot();
-										i = robot.getX();
-										k = robot.getY();
-										if (game.fieldArray1[i][k] == 0) {
-											game.fieldArray1[i][k] = -1;
+									try {
+										   Thread.sleep(500);
+										   // any action
+										   while(game.fieldArray1[i][k] == 1) {
+												
+												game.fieldArray1[i][k] = -2;
+												game.sendShoot(i, k, game.fieldArray1);
+												robot.tryShot();
+												i = robot.getX();
+												k = robot.getY();
+												if (game.fieldArray1[i][k] == 0) {
+													game.fieldArray1[i][k] = -1;
+												}
+												repaint();
+												revalidate();
+											}
+										} catch (InterruptedException f) {
+										   f.printStackTrace();
 										}
-										repaint();
-										revalidate();
-									}
+									
 									
 //									game.fieldArray1[i][k] = -2;
 //									game.sendShoot(i, k, game.fieldArray1);
@@ -239,7 +246,12 @@ public class SeaField extends JPanel {
 								k = robot.getY();
 								if ((game.fieldArray1[i][k] == 1)) {
 									while(game.fieldArray1[i][k] == 1) {
-										
+										try {
+											   Thread.sleep(500);
+											   // any action
+											} catch (InterruptedException f) {
+											   f.printStackTrace();
+											}
 										game.fieldArray1[i][k] = -2;
 										game.sendShoot(i, k, game.fieldArray1);
 										robot.tryShot();
