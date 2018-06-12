@@ -195,12 +195,16 @@ public class SeaField extends JPanel {
 								game.fieldArray1[i][k] = -2;
 								game.sendShoot(i, k, game.fieldArray1);
 								turn++;
+								pl = "<=";
+								turn++;
+								
 
-							} else if (game.fieldArray1[i][k] == 0)
+							} else if (game.fieldArray1[i][k] == 0) {
 								game.fieldArray1[i][k] = -1;
-
-							pl = "=>";
-							turn++;
+								pl = "=>";
+								turn++;
+								
+							}
 							repaint();
 							revalidate();
 						}
@@ -216,7 +220,7 @@ public class SeaField extends JPanel {
 							game.fieldArray2[i][k] = -2;
 							game.sendShoot(i, k, game.fieldArray2);
 							
-							pl = "<=";
+							pl = "=>";
 							if (prog == 2) {
 								//turn++;
 								pl = "=>";
