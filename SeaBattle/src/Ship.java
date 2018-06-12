@@ -14,7 +14,7 @@ public class Ship {
 		this.Xcor = x;
 		this.Ycor = y;
 		this.deckNum = numOfDeck;
-		this.health = numOfDeck;
+		this.health = numOfDeck-1;
 		this.horizontal = alighment;
 	}
 

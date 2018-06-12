@@ -48,7 +48,7 @@ public class SeaField extends JPanel {
 		pl = "=>";
 		prog = 2;
 		field1Vis=true;
-		field2Vis=false;
+		field2Vis=true;
 
 		addMouseListener(new MyMouseListener());
 		addMouseMotionListener(new MyMouseMotionListener());
@@ -360,7 +360,7 @@ public class SeaField extends JPanel {
 				prog = 2;
 				robot.setCleverLvl(1);
 				field1Vis=true;
-				field2Vis=false;
+				field2Vis=true;
 			}
 			if (e.getSource().equals(newGamePVE2)) {
 
@@ -372,7 +372,7 @@ public class SeaField extends JPanel {
 				prog = 2;
 				robot.setCleverLvl(2);
 				field1Vis=true;
-				field2Vis=false;
+				field2Vis=true;
 			}
 			if (e.getSource().equals(newGamePVE3)) {
 
@@ -384,7 +384,7 @@ public class SeaField extends JPanel {
 				prog = 2;
 				robot.setCleverLvl(3);
 				field1Vis=true;
-				field2Vis=false;
+				field2Vis=true;
 			}
 			if (e.getSource().equals(newGamePVP)) {
 
