@@ -201,4 +201,9 @@ public class Comp2 {
 		return this.y;
 	}
 
+	public void setCleverLvl(int cleverLvl) {
+		this.cleverLvl = cleverLvl;
+	}
+
+	
 }

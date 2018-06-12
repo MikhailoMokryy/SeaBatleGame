@@ -27,6 +27,8 @@ public class SeaField extends JPanel {
 	private GameLogic game;
 	private int x, y;
 	private JButton newGamePVE;
+	private JButton newGamePVE2;
+	private JButton newGamePVE3;
 	private JButton newGamePVP;
 	private Comp2 robot;
 	private int turn;
@@ -62,14 +64,28 @@ public class SeaField extends JPanel {
 		MyActionListener action = new MyActionListener();
 
 		newGamePVE = new JButton();
-		newGamePVE.setText("Computer");
+		newGamePVE.setText("Low");
 		newGamePVE.setForeground(DARK_BLUE);
 		newGamePVE.setFont(font.deriveFont(20f));
-		newGamePVE.setBounds(170, 450, 150, 60);
+		newGamePVE.setBounds(50, 450, 70, 50);
 		newGamePVE.addActionListener(action);
 		add(newGamePVE);
+		newGamePVE2 = new JButton();
+		newGamePVE2.setText("Medium");
+		newGamePVE2.setForeground(DARK_BLUE);
+		newGamePVE2.setFont(font.deriveFont(20f));
+		newGamePVE2.setBounds(130, 450, 130, 50);
+		newGamePVE2.addActionListener(action);
+		add(newGamePVE2);
+		newGamePVE3 = new JButton();
+		newGamePVE3.setText("Hard");
+		newGamePVE3.setForeground(DARK_BLUE);
+		newGamePVE3.setFont(font.deriveFont(20f));
+		newGamePVE3.setBounds(270, 450, 90, 50);
+		newGamePVE3.addActionListener(action);
+		add(newGamePVE3);
 		newGamePVP = new JButton();
-		newGamePVP.setText("Player");
+		newGamePVP.setText("With Player");
 		newGamePVP.setForeground(DARK_BLUE);
 		newGamePVP.setFont(font.deriveFont(20f));
 		newGamePVP.setBounds(600, 450, 150, 60);
@@ -91,6 +107,7 @@ public class SeaField extends JPanel {
 
 		g2d.drawString("Player 1", 190, 50);
 		g2d.drawString("Player 2", 590, 50);
+		g2d.drawString("New game", 390, 450);
 		g2d.drawString(pl, 440, 50);
 
 		for (int i = 0; i < 10; i++) {
@@ -334,6 +351,27 @@ public class SeaField extends JPanel {
 				turn = 1;
 				pl = "=>";
 				prog = 2;
+				robot.setCleverLvl(1);
+			}
+			if (e.getSource().equals(newGamePVE2)) {
+
+				game.startGame();
+				game.fillField(game.fieldArray1, true);
+				game.fillField(game.fieldArray2, true);
+				turn = 1;
+				pl = "=>";
+				prog = 2;
+				robot.setCleverLvl(2);
+			}
+			if (e.getSource().equals(newGamePVE3)) {
+
+				game.startGame();
+				game.fillField(game.fieldArray1, true);
+				game.fillField(game.fieldArray2, true);
+				turn = 1;
+				pl = "=>";
+				prog = 2;
+				robot.setCleverLvl(3);
 			}
 			if (e.getSource().equals(newGamePVP)) {
 
