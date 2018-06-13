@@ -5,17 +5,74 @@ public class Ship {
 	private int health;
 	private int Xcor;// cordinats of first field
 	private int Ycor;
+	private int[][] shipCor1 =  new int[10][10];
+	private int[][] shipCor2 =  new int[10][10];
 	private boolean horizontal;
+	
+
 
 	Ship() {
 	}
 
-	Ship(int x, int y, int numOfDeck, boolean alighment) {
+	Ship(int x, int y, int numOfDeck, boolean alighment, int field) {
 		this.Xcor = x;
 		this.Ycor = y;
 		this.deckNum = numOfDeck;
 		this.health = numOfDeck-1;
 		this.horizontal = alighment;
+		setShipCor(x, y,numOfDeck, alighment, field);
+	}
+	
+	/**
+	 * @return the shipCor
+	 */
+	public int[][] getShipCor1() {
+		return shipCor1;
+	}
+	
+	/**
+	 * @return the shipCor
+	 */
+	public int[][] getShipCor2() {
+		return shipCor2;
+	}
+
+
+	/**
+	 * @param shipCor the shipCor to set
+	 */
+	public void setShipCor(int x, int y, int deckNum, boolean horizontal, int field) {
+		System.out.print(field +"№ Field ");
+	  if(field == 1) {
+		System.out.println("|  DeckNum: "+deckNum+"  Horizontal "+horizontal);
+			if (horizontal) {
+				for (int i = 0; i < deckNum; i++) {
+					   shipCor1[x][y + i] = 1;
+					  	System.out.println("Coord: "+(x+1)+" "+ (char) ('A' + y+ i ));
+				}
+			}
+			if (!horizontal) {
+				for (int i = 0; i < deckNum; i++) {
+					  shipCor1[x + i][y] = 1;
+					 System.out.println("Coord: "+(x+i+1)+" "+(char) ('A' + y ));
+				}
+			}
+	  }else if (field == 2) {
+		  System.out.println("|  DeckNum: "+deckNum+"  Horizontal "+horizontal);
+			if (horizontal) {
+				for (int i = 0; i < deckNum; i++) {
+					    shipCor1[x][y + i] = 1;
+					  	System.out.println("Coord: "+(x+1)+" "+ (char) ('A' + y+i ));
+				}
+			}
+			if (!horizontal) {
+				for (int i = 0; i < deckNum; i++) {
+					 shipCor1[x + i][y] = 1;
+					 System.out.println("Coord: "+(x+i+1)+" "+(char) ('A' + y ));
+				}
+			}
+		  
+	  }
 	}
 
 	/**
@@ -92,5 +149,7 @@ public class Ship {
 	public void setDeckNum(int deckNum) {
 		this.deckNum = deckNum;
 	}
+
+	
 
 }

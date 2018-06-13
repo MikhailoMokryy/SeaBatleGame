@@ -23,7 +23,7 @@ public class MainClass extends JFrame {
 			public void run() {
 				try {
 					 UIManager.setLookAndFeel(new NimbusLookAndFeel());
-					MainClass frame = new MainClass();
+					MainClass frame = new MainClass(); 
 					frame.setVisible(true);
 					frame.setResizable(false);
 				} catch (Exception e) {

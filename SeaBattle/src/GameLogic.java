@@ -11,6 +11,7 @@ public class GameLogic {
 	public GameLogic() {
 		fieldArray1 = new int[10][10];
 		fieldArray2 = new int[10][10];
+		
 	}
 
 	public void startGame() {
@@ -23,7 +24,7 @@ public class GameLogic {
 	}
 
 	public void addShipsOnDeck(Ship sh, int[][] fieldArray) {
-		fieldArray[sh.getXcor()][sh.getYcor()] = 1;
+		
 		if (sh.isHorizontal()) {
 			for (int i = 0; i < sh.getDeckNum(); i++) {
 				fieldArray[sh.getXcor()][sh.getYcor() + i] = 1;
@@ -94,6 +95,7 @@ public class GameLogic {
 	// Checking of opportunity to set ship by coordinates by row or column
 	private boolean setShip(int row, int column, int health, boolean orientation, int[][] fieldArray) {
 		boolean isSet = true;
+		int field = 0;
 		if (fieldArray[row][column] > 0)
 			isSet = false;
 		else if (orientation)
@@ -109,24 +111,31 @@ public class GameLogic {
 				else
 					;
 		if (isSet) {
-			addShipsOnDeck(new Ship(row, column, health, orientation), fieldArray);
+			if(fieldArray.equals(fieldArray1))
+			field = 1;
+			else if(fieldArray.equals(fieldArray2)) field = 2;
+			addShipsOnDeck(new Ship(row, column, health, orientation,field), fieldArray);
 		}
 		return isSet;
 	}
 
 	public void sendShoot(int row, int column, int[][] fieldArray) {
 		ArrayList<Ship> shipArray = new ArrayList<Ship>();
-		int field;
+		int field = 0;
 		if (fieldArray.equals(fieldArray1)) {
 			shipArray = shipArray1;
 			field = 1;
-		} else {
+		} else if (fieldArray.equals(fieldArray2)) {
 			shipArray = shipArray2;
 			field = 2;
 		}
 
 		for (Ship s : shipArray) {
+			
+			
+			
 			if (s.isHorizontal()) {
+		//	int deckNum = checkHorizontalNumOfDeck(row,column,fieldArray);
 				for (int i = 0; i < s.getDeckNum(); i++) {
 					if (s.getXcor() == row && (s.getYcor() + i) == column) {
 						if (s.getHealth() > 0)
@@ -138,7 +147,9 @@ public class GameLogic {
 					}
 				}
 			}
-			if (!s.isHorizontal()) {
+			
+			else if (!s.isHorizontal()) {
+			//	int deckNum = checkVerticalNumOfDeck(row,column,fieldArray);
 				for (int i = 0; i < s.getDeckNum(); i++) {
 					if ((s.getXcor() + i) == row && s.getYcor() == column) {
 						if (s.getHealth() > 0)
@@ -164,7 +175,7 @@ public class GameLogic {
 		
 			if(s.getXcor()>0&&s.getYcor()>0&&fieldArray[s.getXcor()-1][s.getYcor()-1] == 0)
 				fieldArray[s.getXcor()-1][s.getYcor()-1] = -1;
-			 if(s.getYcor()>0&&fieldArray[s.getXcor()][s.getYcor()-1] == 0)
+			if(s.getYcor()>0&&fieldArray[s.getXcor()][s.getYcor()-1] == 0)
 				fieldArray[s.getXcor()][s.getYcor()-1] = -1;
 			if(s.getXcor()<9&&s.getYcor()>0&&fieldArray[s.getXcor()+1][s.getYcor()-1] == 0)
 				fieldArray[s.getXcor()+1][s.getYcor()-1] = -1;	
@@ -200,6 +211,29 @@ public class GameLogic {
 				fieldArray[s.getXcor()+s.getDeckNum()][s.getYcor()+1] = -1;
 	
 	}
+	
+    private int checkHorizontalNumOfDeck(int row, int column,  int[][] fieldArray) {
+    int counter = 0;
+        	for (int i = 0; i < 4; i++) {
+        	 	if ( fieldArray[row][column+i] == 1 ) {
+        	 		counter++;
+        	 	}
+    	}
+        	System.out.println("Num of Horizontal deck: "+counter);
+    	
+       	return counter;
+    }
+    
+    private int checkVerticalNumOfDeck(int row, int column,  int[][] fieldArray) {
+        int counter = 0;
+            	for (int i = 0; i < 4; i++) {
+            	 	if ( fieldArray[row+i][column] == 1 ) {
+            	 		counter++;
+            	 	}
+        	}
+            	System.out.println("Num of Vertical deck: "+counter);
+           	return counter;
+        }
 
 	private int getShipsSize(int i) {
 		if (i <= 3)
