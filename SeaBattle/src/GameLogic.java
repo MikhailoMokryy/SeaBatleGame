@@ -21,12 +21,12 @@ public class GameLogic {
 	public void startGame() {
 		for (int i = 0; i < 10; i++) {
 			for (int k = 0; k < 10; k++) {
-				fieldArray1[i][k] = 0;
+				fieldArray1[i][k] = 0; 
 				fieldArray2[i][k] = 0;
 			}
-			 hitcount1 = 0;
-			 hitcount2 = 0;
 		}
+		 hitcount1 = 0;
+		 hitcount2 = 0;
 	}
 
 	public void addShipsOnDeck(Ship sh, int[][] fieldArray) {
@@ -226,7 +226,7 @@ public class GameLogic {
 		if(hitcount1 == 20) System.out.println("Player 1 won!");
 		if(hitcount2 ==  20) System.out.println("Player 2 won!");
 		if (field ==1) ++hitcount1; 
-		if (field ==2) ++hitcount2;
+		if (field ==2) ++hitcount2; 
 	
 		
 	}
