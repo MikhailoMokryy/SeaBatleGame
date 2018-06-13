@@ -159,7 +159,7 @@ public class Comp2 {
 					if (fieldArray[j][i] == -2) {
 						if (checkAround(j, i)) {
 							stop = false;
-							break;
+							break; 
 						}
 					}
 				}

@@ -5,8 +5,8 @@ public class Ship {
 	private int health;
 	private int Xcor;// cordinats of first field
 	private int Ycor;
-	private int[][] shipCor1 =  new int[10][10];
-	private int[][] shipCor2 =  new int[10][10];
+	private int[][] shipCor1;
+	private int[][] shipCor2 ;
 	private boolean horizontal;
 	
 
@@ -14,13 +14,20 @@ public class Ship {
 	Ship() {
 	}
 
-	Ship(int x, int y, int numOfDeck, boolean alighment, int field) {
+	Ship(int x, int y, int numOfDeck, boolean alighment) {
 		this.Xcor = x;
 		this.Ycor = y;
 		this.deckNum = numOfDeck;
-		this.health = numOfDeck-1;
+		this.health = numOfDeck-1; 
 		this.horizontal = alighment;
-		setShipCor(x, y,numOfDeck, alighment, field);
+		//setShipCor(x, y,numOfDeck, alighment, field);
+	}
+	
+	public boolean isDead() {
+		if(this.health >= 0)
+			return false;
+		else 
+			return true;
 	}
 	
 	/**
@@ -46,12 +53,14 @@ public class Ship {
 	  if(field == 1) {
 		System.out.println("|  DeckNum: "+deckNum+"  Horizontal "+horizontal);
 			if (horizontal) {
+				shipCor1 =  new int[x+1][y +deckNum];
 				for (int i = 0; i < deckNum; i++) {
 					   shipCor1[x][y + i] = 1;
 					  	System.out.println("Coord: "+(x+1)+" "+ (char) ('A' + y+ i ));
 				}
 			}
 			if (!horizontal) {
+				shipCor1 =  new int[x+deckNum][y +1];
 				for (int i = 0; i < deckNum; i++) {
 					  shipCor1[x + i][y] = 1;
 					 System.out.println("Coord: "+(x+i+1)+" "+(char) ('A' + y ));
@@ -60,14 +69,16 @@ public class Ship {
 	  }else if (field == 2) {
 		  System.out.println("|  DeckNum: "+deckNum+"  Horizontal "+horizontal);
 			if (horizontal) {
+				shipCor2 =  new int[x+1][y +deckNum];
 				for (int i = 0; i < deckNum; i++) {
-					    shipCor1[x][y + i] = 1;
+					    shipCor2[x][y + i] = 1;
 					  	System.out.println("Coord: "+(x+1)+" "+ (char) ('A' + y+i ));
 				}
 			}
 			if (!horizontal) {
+				shipCor2 =  new int[x+deckNum][y +1];
 				for (int i = 0; i < deckNum; i++) {
-					 shipCor1[x + i][y] = 1;
+					 shipCor2[x + i][y] = 1;
 					 System.out.println("Coord: "+(x+i+1)+" "+(char) ('A' + y ));
 				}
 			}

@@ -46,7 +46,7 @@ public class SeaField extends JPanel {
 		robot = new Comp2(game.fieldArray1, 2);
 		turn = 1;
 		pl = "=>";
-		prog = 2;
+		prog = 2; 
 		field1Vis=true;
 		field2Vis=true;
 
@@ -118,7 +118,7 @@ public class SeaField extends JPanel {
 			for (int k = 0; k < 10; k++) {
 				
 				if(field1Vis) {
-				if (game.fieldArray1[i][k] == 1) {
+				if (game.fieldArray1[i][k] >= 1&&game.fieldArray1[i][k] <= 4) {
 					g.drawImage(shipPart, 100 + k * 30, 100 + i * 30, 30, 30, null);
 
 				}
@@ -132,7 +132,7 @@ public class SeaField extends JPanel {
 				}
 				
 				if(field2Vis) {
-				if (game.fieldArray2[i][k] == 1) {
+				if (game.fieldArray2[i][k] >= 1&&game.fieldArray2[i][k] <= 4) {
 					g.drawImage(shipPart, 500 + k * 30, 100 + i * 30, 30, 30, null);
 				}
 				}
@@ -191,9 +191,10 @@ public class SeaField extends JPanel {
 							int i = (y - 100) / 30;
 							int k = (x - 100) / 30;
 
-							if ((game.fieldArray1[i][k] == 1)) {
-								game.fieldArray1[i][k] = -2;
+							if (game.fieldArray1[i][k] >= 1&&game.fieldArray1[i][k] <= 4) {
 								game.sendShoot(i, k, game.fieldArray1);
+								game.fieldArray1[i][k] = -2;
+
 								turn++;
 								pl = "<=";
 								turn++;
@@ -216,9 +217,9 @@ public class SeaField extends JPanel {
 						int i = (y - 100) / 30;
 						int k = (x - 500) / 30;
 
-						if ((game.fieldArray2[i][k] == 1)) {
-							game.fieldArray2[i][k] = -2;
+						if (game.fieldArray2[i][k] >= 1&&game.fieldArray2[i][k] <= 4) {
 							game.sendShoot(i, k, game.fieldArray2);
+							game.fieldArray2[i][k] = -2;
 							
 							pl = "=>";
 
@@ -233,16 +234,16 @@ public class SeaField extends JPanel {
 								robot.tryShot();
 								i = robot.getX();
 								k = robot.getY();
-								if ((game.fieldArray1[i][k] == 1)) {
-									while(game.fieldArray1[i][k] == 1) {
+								if (game.fieldArray1[i][k] >= 1&&game.fieldArray1[i][k] <= 4) {
+									while(game.fieldArray1[i][k] >= 1&&game.fieldArray1[i][k] <= 4) {
 										try {
-											   Thread.sleep(500);
+											   Thread.sleep(1-00);
 											   // any action
 											} catch (InterruptedException f) {
 											   f.printStackTrace();
 											}
-										game.fieldArray1[i][k] = -2;
 										game.sendShoot(i, k, game.fieldArray1);
+										game.fieldArray1[i][k] = -2;					
 										robot.tryShot();
 										i = robot.getX();
 										k = robot.getY();
