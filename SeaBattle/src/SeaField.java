@@ -322,10 +322,12 @@ public class SeaField extends JPanel {
 								i = robot.getX();
 								k = robot.getY();
 								if (game.fieldArray1[i][k] >= 1&&game.fieldArray1[i][k] <= 4) {
-									while(game.fieldArray1[i][k] >= 1&&game.fieldArray1[i][k] <= 4&&hits1!=20) {
+									while(game.fieldArray1[i][k] >= 1&&game.fieldArray1[i][k] <= 4) {
 										hits1++;
 										game.sendShoot(i, k, game.fieldArray1);
-										game.fieldArray1[i][k] = -2;					
+										game.fieldArray1[i][k] = -2;
+										if(hits1==20)
+											break;
 										robot.tryShot();
 										i = robot.getX();
 										k = robot.getY();
