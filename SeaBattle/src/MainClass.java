@@ -24,6 +24,7 @@ public class MainClass extends JFrame {
 				try {
 					 UIManager.setLookAndFeel(new NimbusLookAndFeel());
 					MainClass frame = new MainClass(); 
+	
 					frame.setVisible(true);
 					frame.setResizable(false);
 				} catch (Exception e) {
@@ -40,6 +41,7 @@ public class MainClass extends JFrame {
 		setTitle("ShipBattle");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(200, 200, 900, 600);
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -48,6 +50,8 @@ public class MainClass extends JFrame {
 		sf.setBounds(0, 0, 900, 600);
 		contentPane.add(sf);
 		contentPane.setLayout(null);
+		
+
 
 	}
 }

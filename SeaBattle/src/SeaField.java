@@ -3,6 +3,8 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,7 +14,13 @@ import java.awt.event.MouseMotionListener;
 import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 
 public class SeaField extends JPanel {
 
@@ -24,18 +32,18 @@ public class SeaField extends JPanel {
 	private Font font = new Font("Comic Sans MS", Font.BOLD, 15);
 	private Image background, shipPart, hitPart, bomb;
 	private Graphics2D g2d;
+	private MyActionListener action;
 	private GameLogic game;
 	private int x, y;
-	private JButton newGamePVE;
-	private JButton newGamePVE2;
-	private JButton newGamePVE3;
-	private JButton newGamePVP;
+	private JLabel devInfo;
+	private JButton newGamePVE,newGamePVE2,newGamePVE3,newGamePVP,goToMenuBtn, exitBtn;	
 	private Comp2 robot;
 	private int turn;
 	private String pl;
 	private int prog;
 	private boolean field1Vis;
 	private boolean field2Vis;
+	private boolean isMenu;
 
 	public SeaField() {
 
@@ -53,7 +61,7 @@ public class SeaField extends JPanel {
 		addMouseListener(new MyMouseListener());
 		addMouseMotionListener(new MyMouseMotionListener());
 		setFocusable(true);
-
+		
 		try {
 			background = ImageIO.read(new File("Pics/water.png")); // TODO change PATH
 			shipPart = ImageIO.read(new File("Pics/gray_sqr.png"));
@@ -63,55 +71,30 @@ public class SeaField extends JPanel {
 			e.printStackTrace();
 			System.err.println("Change pictures directory!");
 		}
-
+		
 		setLayout(null);
-		MyActionListener action = new MyActionListener();
+		action = new MyActionListener();
+	
+		mainMenuFrame();
 
-		newGamePVE = new JButton();
-		newGamePVE.setText("Low");
-		newGamePVE.setForeground(DARK_BLUE);
-		newGamePVE.setFont(font.deriveFont(20f));
-		newGamePVE.setBounds(50, 450, 70, 50);
-		newGamePVE.addActionListener(action);
-		add(newGamePVE);
-		newGamePVE2 = new JButton();
-		newGamePVE2.setText("Medium");
-		newGamePVE2.setForeground(DARK_BLUE);
-		newGamePVE2.setFont(font.deriveFont(20f));
-		newGamePVE2.setBounds(130, 450, 130, 50);
-		newGamePVE2.addActionListener(action);
-		add(newGamePVE2);
-		newGamePVE3 = new JButton();
-		newGamePVE3.setText("Hard");
-		newGamePVE3.setForeground(DARK_BLUE);
-		newGamePVE3.setFont(font.deriveFont(20f));
-		newGamePVE3.setBounds(270, 450, 90, 50);
-		newGamePVE3.addActionListener(action);
-		add(newGamePVE3);
-		newGamePVP = new JButton();
-		newGamePVP.setText("With Player");
-		newGamePVP.setForeground(DARK_BLUE);
-		newGamePVP.setFont(font.deriveFont(20f));
-		newGamePVP.setBounds(600, 450, 150, 60);
-		newGamePVP.addActionListener(action);
-		add(newGamePVP);
+	
 
+		
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
-
+	
 		super.paintComponent(g);
-
+		
 		g2d = (Graphics2D) g;
 		g2d.drawImage(background, 0, 0, 900, 600, null);
-
+		
 		g2d.setFont(font.deriveFont(30f));
 		g2d.setColor(DARK_BLUE);
-
+		if(!isMenu()) {
 		g2d.drawString("Player 1", 190, 50);
 		g2d.drawString("Player 2", 590, 50);
-		g2d.drawString("New game", 390, 450);
 		g2d.drawString(pl, 440, 50);
 
 		for (int i = 0; i < 10; i++) {
@@ -146,6 +129,7 @@ public class SeaField extends JPanel {
 				}
 
 			}
+			
 		}
 
 		g2d.setColor(DARK_BLUE);
@@ -167,6 +151,105 @@ public class SeaField extends JPanel {
 			g2d.drawString("" + (char) ('A' + i - 1), 478 + i * 30, 93);
 
 		}
+		}
+		
+	}
+	
+	
+	
+	/**
+	* Метод відображення основного меню.
+	*/
+	private void mainMenuFrame()  {
+	
+		setLayout(null);
+		setVisible(true);
+	
+		
+		newGamePVE = new JButton();
+		newGamePVE.setText("Low");
+		newGamePVE.setForeground(DARK_BLUE);
+		newGamePVE.setFont(font.deriveFont(20f));
+		newGamePVE.setBounds(350, 120, 200, 60);
+		newGamePVE.addActionListener(action);
+		add(newGamePVE);
+		newGamePVE2 = new JButton();
+		newGamePVE2.setText("Medium");
+		newGamePVE2.setForeground(DARK_BLUE);
+		newGamePVE2.setFont(font.deriveFont(20f));
+		newGamePVE2.setBounds(350, 200, 200, 60);
+		newGamePVE2.addActionListener(action);
+		add(newGamePVE2);
+		newGamePVE3 = new JButton();
+		newGamePVE3.setText("Hard");
+		newGamePVE3.setForeground(DARK_BLUE);
+		newGamePVE3.setFont(font.deriveFont(20f));
+		newGamePVE3.setBounds(350, 280, 200, 60);
+		newGamePVE3.addActionListener(action);
+		add(newGamePVE3);
+		newGamePVP = new JButton();
+		newGamePVP.setText("With Player");
+		newGamePVP.setForeground(DARK_BLUE);
+		newGamePVP.setFont(font.deriveFont(20f));
+		newGamePVP.setBounds(350, 360, 200, 60);
+		newGamePVP.addActionListener(action);
+		add(newGamePVP);
+		exitBtn = new JButton();
+		exitBtn.setText("Exit");
+		exitBtn.setForeground(DARK_BLUE);
+		exitBtn.setFont(font.deriveFont(20f));
+		exitBtn.setBounds(350, 440, 200, 60);
+		exitBtn.addActionListener(action);
+		add(exitBtn);
+		
+		devInfo = new JLabel("<html>Made by Mikhailo Mokryy and Andry Kovalenko, 2018</html>");
+		devInfo.setForeground(new Color(255, 255, 255));
+		devInfo.setFont(font.deriveFont(Font.PLAIN,11f));
+		devInfo.setBackground(new Color(255, 255, 255));
+		devInfo.setBounds(622, 547, 300, 37);
+		
+		add(devInfo);
+	
+		setMenu(true);
+		
+		
+		//if(!goToMenuBtn.equals(null))
+		//goToMenuBtn.setVisible(false);
+	
+	
+		
+		
+		System.out.println("to menu");
+		
+		
+		
+	}
+	
+	private void gameFrame() {
+		newGamePVP.setVisible(false);
+		newGamePVE.setVisible(false);
+		newGamePVE2.setVisible(false);
+		newGamePVE3.setVisible(false);
+		exitBtn.setVisible(false);
+		
+		setVisible(true);
+		setLayout(null);
+
+		goToMenuBtn = new JButton();
+		goToMenuBtn.setText("To menu");
+		goToMenuBtn.setForeground(DARK_BLUE);
+		goToMenuBtn.setFont(font.deriveFont(20f));
+		goToMenuBtn.setBounds(375, 460, 150, 60);
+		goToMenuBtn.addActionListener(action);
+		add(goToMenuBtn);
+		
+		
+		setMenu(false);
+		
+		
+		setVisible(true);
+		
+
 	}
 
 	public class MyMouseListener implements MouseListener {
@@ -316,8 +399,10 @@ public class SeaField extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 
+			
+			
 			if (e.getSource().equals(newGamePVE)) {
-
+				gameFrame();
 				game.startGame();
 				game.fillField(game.fieldArray1, true);
 				game.fillField(game.fieldArray2, true);
@@ -329,7 +414,7 @@ public class SeaField extends JPanel {
 				field2Vis=true;
 			}
 			if (e.getSource().equals(newGamePVE2)) {
-
+				gameFrame();
 				game.startGame();
 				game.fillField(game.fieldArray1, true);
 				game.fillField(game.fieldArray2, true);
@@ -341,7 +426,7 @@ public class SeaField extends JPanel {
 				field2Vis=true;
 			}
 			if (e.getSource().equals(newGamePVE3)) {
-
+				gameFrame();
 				game.startGame();
 				game.fillField(game.fieldArray1, true);
 				game.fillField(game.fieldArray2, true);
@@ -353,7 +438,7 @@ public class SeaField extends JPanel {
 				field2Vis=true;
 			}
 			if (e.getSource().equals(newGamePVP)) {
-
+				gameFrame();
 				game.startGame();
 				game.fillField(game.fieldArray1, true);
 				game.fillField(game.fieldArray2, true);
@@ -363,10 +448,36 @@ public class SeaField extends JPanel {
 				field1Vis=true;
 				field2Vis=true;
 			}
-
+			
+			if (e.getSource().equals(goToMenuBtn)) {
+				mainMenuFrame();
+				goToMenuBtn.setVisible(false);
+				
+			}
+			
+			
+			if (e.getSource().equals(exitBtn)) {
+				System.exit(0);
+				
+			}
+			
 			repaint();
 			revalidate();
 		}
+	}
+
+	/**
+	 * @return the isMenu
+	 */
+	public boolean isMenu() {
+		return isMenu;
+	}
+
+	/**
+	 * @param isMenu the isMenu to set
+	 */
+	public void setMenu(boolean isMenu) {
+		this.isMenu = isMenu;
 	}
 
 
