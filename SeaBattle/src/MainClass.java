@@ -22,7 +22,7 @@ public class MainClass extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					 UIManager.setLookAndFeel(new NimbusLookAndFeel());
+					UIManager.setLookAndFeel(new NimbusLookAndFeel());
 					MainClass frame = new MainClass(); 
 	
 					frame.setVisible(true);
