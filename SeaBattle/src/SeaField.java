@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -44,6 +45,9 @@ public class SeaField extends JPanel {
 	private boolean field1Vis;
 	private boolean field2Vis;
 	private boolean isMenu;
+	private int hits1;
+	private int hits2;
+
 
 	public SeaField() {
 
@@ -277,7 +281,7 @@ public class SeaField extends JPanel {
 							if (game.fieldArray1[i][k] >= 1&&game.fieldArray1[i][k] <= 4) {
 								game.sendShoot(i, k, game.fieldArray1);
 								game.fieldArray1[i][k] = -2;
-
+								hits1++;
 								turn++;
 								pl = "<=";
 								turn++;
@@ -303,7 +307,7 @@ public class SeaField extends JPanel {
 						if (game.fieldArray2[i][k] >= 1&&game.fieldArray2[i][k] <= 4) {
 							game.sendShoot(i, k, game.fieldArray2);
 							game.fieldArray2[i][k] = -2;
-							
+							hits2++;
 							pl = "=>";
 
 							turn+=2;
@@ -318,13 +322,8 @@ public class SeaField extends JPanel {
 								i = robot.getX();
 								k = robot.getY();
 								if (game.fieldArray1[i][k] >= 1&&game.fieldArray1[i][k] <= 4) {
-									while(game.fieldArray1[i][k] >= 1&&game.fieldArray1[i][k] <= 4) {
-										try {
-											   Thread.sleep(1-00);
-											   // any action
-											} catch (InterruptedException f) {
-											   f.printStackTrace();
-											}
+									while(game.fieldArray1[i][k] >= 1&&game.fieldArray1[i][k] <= 4&&hits1!=20) {
+										hits1++;
 										game.sendShoot(i, k, game.fieldArray1);
 										game.fieldArray1[i][k] = -2;					
 										robot.tryShot();
@@ -352,6 +351,13 @@ public class SeaField extends JPanel {
 				}
 
 			}
+			if(hits1==20) {
+				JOptionPane.showMessageDialog(new JButton("Ok"), "Player 2 wins!!!");
+			}
+			if(hits2==20) {
+				JOptionPane.showMessageDialog(new JButton("Ok"), "Player 1 wins!!!");
+			}
+
 		}
 
 		@Override
@@ -406,6 +412,8 @@ public class SeaField extends JPanel {
 				game.startGame();
 				game.fillField(game.fieldArray1, true);
 				game.fillField(game.fieldArray2, true);
+				hits1=0;
+				hits2=0;
 				turn = 1;
 				pl = "=>";
 				prog = 2;
@@ -418,6 +426,8 @@ public class SeaField extends JPanel {
 				game.startGame();
 				game.fillField(game.fieldArray1, true);
 				game.fillField(game.fieldArray2, true);
+				hits1=0;
+				hits2=0;
 				turn = 1;
 				pl = "=>";
 				prog = 2;
@@ -430,6 +440,8 @@ public class SeaField extends JPanel {
 				game.startGame();
 				game.fillField(game.fieldArray1, true);
 				game.fillField(game.fieldArray2, true);
+				hits1=0;
+				hits2=0;
 				turn = 1;
 				pl = "=>";
 				prog = 2;
@@ -442,6 +454,8 @@ public class SeaField extends JPanel {
 				game.startGame();
 				game.fillField(game.fieldArray1, true);
 				game.fillField(game.fieldArray2, true);
+				hits1=0;
+				hits2=0;
 				turn = 1;
 				pl = "=>";
 				prog = 1;

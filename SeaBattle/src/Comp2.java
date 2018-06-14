@@ -143,6 +143,10 @@ public class Comp2 {
 
 	// try to make a shot
 	public void tryShot() {
+		try {
+			   Thread.sleep(1-00);
+			   // any action
+			
 		x = rand.nextInt(10);
 		y = rand.nextInt(10);
 		if (cleverLvl == 1) {
@@ -181,6 +185,9 @@ public class Comp2 {
 				}
 			}
 		}
+		} catch (InterruptedException f) {
+			   f.printStackTrace();
+			}
 	}
 
 	/**
