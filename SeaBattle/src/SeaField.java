@@ -215,18 +215,7 @@ public class SeaField extends JPanel {
 		add(devInfo);
 	
 		setMenu(true);
-		
-		
-		//if(!goToMenuBtn.equals(null))
-		//goToMenuBtn.setVisible(false);
-	
-	
-		
-		
-		System.out.println("to menu");
-		
-		
-		
+			
 	}
 	
 	private void gameFrame() {
@@ -364,11 +353,16 @@ public class SeaField extends JPanel {
 				}
 
 			}
+		
 			if(hits1==20) {
-				JOptionPane.showMessageDialog(new JButton("Ok"), "Player 2 wins!!!");
+				JOptionPane.showMessageDialog(null,
+						"Player 1 wins!!!", "Message",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 			if(hits2==20) {
-				JOptionPane.showMessageDialog(new JButton("Ok"), "Player 1 wins!!!");
+				JOptionPane.showMessageDialog(null,
+						"Player 2 wins!!!", "Message",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 
 		}
