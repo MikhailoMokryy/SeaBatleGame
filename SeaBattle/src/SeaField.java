@@ -334,18 +334,29 @@ public class SeaField extends JPanel {
 										if (game.fieldArray1[i][k] == 0) {
 											game.fieldArray1[i][k] = -1;
 										}
+										System.out.println("start");
+								    	try {
+											Thread.sleep(3000);
+											
+											System.out.println("shot!");
+											
+										
+								    	} catch (InterruptedException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										}
+								    	System.out.println("end");
+								    	
 										repaint();
 										revalidate();
+								    	
 									}
-									
-//									game.fieldArray1[i][k] = -2;
-//									game.sendShoot(i, k, game.fieldArray1);
 								} else if (game.fieldArray1[i][k] == 0)
 									game.fieldArray1[i][k] = -1;
 							}
 							turn++;
 						}
-
+						
 						repaint();
 						revalidate();
 					}

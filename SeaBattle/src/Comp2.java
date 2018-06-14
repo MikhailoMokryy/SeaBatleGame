@@ -143,12 +143,11 @@ public class Comp2 {
 
 	// try to make a shot
 	public void tryShot() {
-		try {
-			   Thread.sleep(500);
-			   // any action
-		} catch (InterruptedException f) {
-			   f.printStackTrace();
-			}
+//		System.out.println("start");
+//    	try {
+//			Thread.sleep(3000);
+//			
+//			System.out.println("shot!");
 		x = rand.nextInt(10);
 		y = rand.nextInt(10);
 		if (cleverLvl == 1) {
@@ -186,8 +185,12 @@ public class Comp2 {
 					}
 				}
 			}
-		}
-		
+		} 
+//    	} catch (InterruptedException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//    	System.out.println("end");
 	}
 
 	/**
