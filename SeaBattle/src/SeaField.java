@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
@@ -80,9 +81,8 @@ public class SeaField extends JPanel {
 		action = new MyActionListener();
 	
 		mainMenuFrame();
-
-	
-
+		
+		
 		
 	}
 
@@ -323,19 +323,6 @@ public class SeaField extends JPanel {
 										if (game.fieldArray1[i][k] == 0) {
 											game.fieldArray1[i][k] = -1;
 										}
-										System.out.println("start");
-								    	try {
-											Thread.sleep(3000);
-											
-											System.out.println("shot!");
-											
-										
-								    	} catch (InterruptedException e1) {
-											// TODO Auto-generated catch block
-											e1.printStackTrace();
-										}
-								    	System.out.println("end");
-								    	
 										repaint();
 										revalidate();
 								    	
@@ -500,6 +487,4 @@ public class SeaField extends JPanel {
 	public void setMenu(boolean isMenu) {
 		this.isMenu = isMenu;
 	}
-
-
 }
