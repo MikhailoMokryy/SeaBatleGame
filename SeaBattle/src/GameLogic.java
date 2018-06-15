@@ -5,30 +5,64 @@ public class GameLogic {
 
 	public int[][] fieldArray1;
 	public int[][] fieldArray2;
-	public ArrayList<Ship> shipArray1 = new ArrayList<Ship>();
-	public ArrayList<Ship> shipArray2 = new ArrayList<Ship>();
+	public int[][] chooserArray;
+	public ArrayList<Ship> shipArray1;
+	public ArrayList<Ship> shipArray2;
 	private int[] sizeShips = {4,3,3,2,2,2,1,1,1,1};
-	private int hitcount1;
-	private int hitcount2;
+	
 
 
 	public GameLogic() {
 		fieldArray1 = new int[10][10];
 		fieldArray2 = new int[10][10];
+		chooserArray = new int[8][7];
 		
 	}
 
 	public void startGame() {
+	  shipArray1 = new ArrayList<Ship>();
+	  shipArray2 = new ArrayList<Ship>();
 		for (int i = 0; i < 10; i++) {
 			for (int k = 0; k < 10; k++) {
 				fieldArray1[i][k] = 0; 
 				fieldArray2[i][k] = 0;
 			}
 		}
-		 hitcount1 = 0;
-		 hitcount2 = 0;
 	}
+	
+	public void cleanField(int[][] fieldArray) {
+		for (int i = 0; i < 10; i++) {
+			for (int k = 0; k < 10; k++) {
+				fieldArray[i][k] = 0; 
 
+			}
+		}
+	}
+	
+	public void cleanEditorField() {
+		for (int i = 0; i < 8; i++) {
+			for (int k = 0; k < 7; k++) {
+				chooserArray[i][k] = 0; 
+
+			}
+		}
+	}
+	
+
+	public void addShipsOnCooserDeck(Ship sh) {
+		
+		if (sh.isHorizontal()) {
+			for (int i = 0; i < sh.getDeckNum(); i++) {
+				chooserArray[sh.getXcor()][sh.getYcor() + i] = sh.getDeckNum();
+			}
+		}
+		else if (!sh.isHorizontal()) {
+			for (int i = 0; i < sh.getDeckNum(); i++) {
+				chooserArray[sh.getXcor() + i][sh.getYcor()] = sh.getDeckNum();
+			}
+		}
+	}
+	
 	public void addShipsOnDeck(Ship sh, int[][] fieldArray) {
 		
 		if (sh.isHorizontal()) {
@@ -73,19 +107,46 @@ public class GameLogic {
 	public void fillField(int[][] fieldArray, boolean isRandom) {
 		boolean isRepeat;
 		int row = 0, column = 0;
+		int num1 = 0, num2 =0, num3= 0;
 		boolean orientation = false;
 		Random rand = new Random();
-
+		chooserArray = new int[8][7];
 		for (int i = 0; i < 10; i++) {
 
-			
+		
 			if (!isRandom) {
+				orientation = false;
+				if(getSizeShips()[i]==1) {
+					row = num1++;
+					column = 0;
+					num1 += getSizeShips()[i];
+					
+				}	
+				else if(getSizeShips()[i]==2) {
+					row = num2++;
+					column = 2;	
+					num2 += getSizeShips()[i];
+				}	
+				else if(getSizeShips()[i]==3) {
+					row = num3++;
+					column = 4;	
+					num3 += getSizeShips()[i];
+				}	
+				
+				else if(getSizeShips()[i]==4) {
+					row = 2;
+					column = 6 ;	
+				}	
+				
+				addShipsOnCooserDeck(new Ship(row, column, getSizeShips()[i], orientation));
 			}
 
 			isRepeat = true;
 			do {
 				if (!isRandom) {
-					// game with another player
+					isRepeat = false;
+					
+				
 				} else {
 					row = rand.nextInt(10);
 					column = rand.nextInt(10);
@@ -148,7 +209,7 @@ public class GameLogic {
 							System.out.println(s.getDeckNum() + " - killed horizontal Field: " + field);
 							setFieldAroundHorizontalShip(s, fieldArray);
 						}
-						countHits(field);
+				
 					}
 				}
 			}
@@ -163,7 +224,7 @@ public class GameLogic {
 							System.out.println(s.getDeckNum() + " - killed vertical Field: " + field);
 							setFieldAroundVerticalShip(s, fieldArray);
 							}
-						countHits(field);
+					
 						}    
 					}
 				}
@@ -222,14 +283,7 @@ public class GameLogic {
 	
 	}
 	
-	private void countHits(int field) {
-		if(hitcount1 == 20) System.out.println("Player 1 won!");
-		if(hitcount2 ==  20) System.out.println("Player 2 won!");
-		if (field ==1) ++hitcount1; 
-		if (field ==2) ++hitcount2; 
-	
-		
-	}
+
 	public int[] getSizeShips() {
 		return sizeShips;
 	}
