@@ -6,11 +6,10 @@ public class GameLogic {
 	public int[][] fieldArray1;
 	public int[][] fieldArray2;
 	public int[][] chooserArray;
-	public ArrayList<Ship> shipArray1 = new ArrayList<Ship>();
-	public ArrayList<Ship> shipArray2 = new ArrayList<Ship>();
+	public ArrayList<Ship> shipArray1;
+	public ArrayList<Ship> shipArray2;
 	private int[] sizeShips = {4,3,3,2,2,2,1,1,1,1};
-	private int hitcount1;
-	private int hitcount2;
+	
 
 
 	public GameLogic() {
@@ -21,15 +20,34 @@ public class GameLogic {
 	}
 
 	public void startGame() {
+	  shipArray1 = new ArrayList<Ship>();
+	  shipArray2 = new ArrayList<Ship>();
 		for (int i = 0; i < 10; i++) {
 			for (int k = 0; k < 10; k++) {
 				fieldArray1[i][k] = 0; 
 				fieldArray2[i][k] = 0;
 			}
 		}
-		 hitcount1 = 0;
-		 hitcount2 = 0;
 	}
+	
+	public void cleanField(int[][] fieldArray) {
+		for (int i = 0; i < 10; i++) {
+			for (int k = 0; k < 10; k++) {
+				fieldArray[i][k] = 0; 
+
+			}
+		}
+	}
+	
+	public void cleanEditorField() {
+		for (int i = 0; i < 8; i++) {
+			for (int k = 0; k < 7; k++) {
+				chooserArray[i][k] = 0; 
+
+			}
+		}
+	}
+	
 
 	public void addShipsOnCooserDeck(Ship sh) {
 		
@@ -191,7 +209,7 @@ public class GameLogic {
 							System.out.println(s.getDeckNum() + " - killed horizontal Field: " + field);
 							setFieldAroundHorizontalShip(s, fieldArray);
 						}
-						countHits(field);
+				
 					}
 				}
 			}
@@ -206,7 +224,7 @@ public class GameLogic {
 							System.out.println(s.getDeckNum() + " - killed vertical Field: " + field);
 							setFieldAroundVerticalShip(s, fieldArray);
 							}
-						countHits(field);
+					
 						}    
 					}
 				}
@@ -265,14 +283,7 @@ public class GameLogic {
 	
 	}
 	
-	private void countHits(int field) {
-		if(hitcount1 == 20) System.out.println("Player 1 won!");
-		if(hitcount2 ==  20) System.out.println("Player 2 won!");
-		if (field ==1) ++hitcount1; 
-		if (field ==2) ++hitcount2; 
-	
-		
-	}
+
 	public int[] getSizeShips() {
 		return sizeShips;
 	}

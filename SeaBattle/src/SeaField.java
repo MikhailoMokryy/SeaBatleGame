@@ -1,11 +1,14 @@
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -20,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.RepaintManager;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
@@ -37,19 +41,19 @@ public class SeaField extends JPanel {
 	private GameLogic game;
 	private int x, y;
 	private JLabel devInfo;
-	private JButton newGamePVE,newGamePVE2,newGamePVE3,newGamePVP,goToMenuBtn, exitBtn, playBtn, randomBtn;	
+	private JButton newGamePVE,newGamePVE2,newGamePVE3,newGamePVP,goToMenuBtn, exitBtn, playBtn, randomBtn1,randomBtn2, nextBtn;	
 	private Comp2 robot;
 	private int turn;
 	private String pl;
 	private int prog;
 	private boolean field1Vis;
 	private boolean field2Vis;
-	private boolean isMenu;
-	private boolean isFieldSet1;
-	private boolean isFieldSet2;
+	private boolean isMenu,fieldEdible;
+	private boolean isFieldSet1,isFieldSet2,isField1,isField2, flag, isPVP;
+	
 	private int hits1;
 	private int hits2;
-
+	int imageX, imageY;
 
 	public SeaField() {
 
@@ -82,7 +86,11 @@ public class SeaField extends JPanel {
 	
 		mainMenuFrame();
 
-	
+//		 RepaintManager.currentManager(null).setDoubleBufferingEnabled(false);
+//		  shipPart = shipPart.getScaledInstance(30, 30, Image.SCALE_DEFAULT);
+		  
+		//TODO
+		   
 
 		
 	}
@@ -99,19 +107,26 @@ public class SeaField extends JPanel {
 		g2d.setColor(DARK_BLUE);
 		
 		if(!isMenu()) {
-			if(isFieldSet2()) {
+			
+		if(isFieldSet2())	
 		g2d.drawString("Player 1", 190, 50);
+		if(isFieldSet1()) 
 		g2d.drawString("Player 2", 590, 50);
-		g2d.drawString(pl, 440, 50);
+		
 
+		if(isField1()&&isField2()) 
+			g2d.drawString(pl, 440, 50);
+		
 		for (int i = 0; i < 10; i++) {
 			for (int k = 0; k < 10; k++) {
 				
 				if(field1Vis) {
+					if(isField1()) {
 				if (game.fieldArray1[i][k] >= 1&&game.fieldArray1[i][k] <= 4) {
 					g.drawImage(shipPart, 100 + k * 30, 100 + i * 30, 30, 30, null);
 
 				}
+					}
 				}
 				if (game.fieldArray1[i][k] == -1) {
 					g.drawImage(bomb, 100 + k * 30, 100 + i * 30, 30, 30, null);
@@ -119,12 +134,15 @@ public class SeaField extends JPanel {
 
 				if (game.fieldArray1[i][k] == -2) {
 					g.drawImage(hitPart, 100 + k * 30, 100 + i * 30, 30, 30, null);
+					g.drawImage(bomb, 100 + k * 30, 100 + i * 30, 30, 30, null);
 				}
 				
 				if(field2Vis) {
+					if(isField2()) {
 				if (game.fieldArray2[i][k] >= 1&&game.fieldArray2[i][k] <= 4) {
 					g.drawImage(shipPart, 500 + k * 30, 100 + i * 30, 30, 30, null);
 				}
+					}
 				}
 				
 				if (game.fieldArray2[i][k] == -1) {
@@ -133,32 +151,61 @@ public class SeaField extends JPanel {
 
 				if (game.fieldArray2[i][k] == -2) {
 					g.drawImage(hitPart, 500 + k * 30, 100 + i * 30, 30, 30, null);
+					g.drawImage(bomb, 500 + k * 30, 100 + i * 30, 30, 30, null);
 				}
 
 			}
 			
 		}
-			}
-	
+			
+		}
 		g2d.setColor(DARK_BLUE);
 		
 		
-		if(!isFieldSet2()&&isFieldSet())
+		if(!isFieldSet2()&&isFieldSet1()&&flag) {
 		for (int i = 0; i < 8; i++) {
 			for (int k = 0; k < 7; k++) {
 				if (game.chooserArray[i][k] >= 1&&game.chooserArray[i][k] <= 4) {
-					g.drawImage(shipPart, 500 + k * 30, 100 + i * 30, 30, 30, null);
+					g.drawImage(shipPart, 100 + k * 30, 100 + i * 30, 30, 30, null);
 
 				}
 			}
-			}
+		}	
+	}	
+		if(isFieldSet2()&&!isFieldSet1()&&!isField1()&&!flag) {
+			for (int i = 0; i < 8; i++) {
+				for (int k = 0; k < 7; k++) {
+					if (game.chooserArray[i][k] >= 1&&game.chooserArray[i][k] <= 4) {
+						g.drawImage(shipPart, 500 + k * 30, 100 + i * 30, 30, 30, null);
+
+					}
+				}
+			}	
+		}	
 		
+//		//TODO
+//			for (int i = 0; i < 10; i++) {
+//				for (int k = 0; k < 10; k++) {
+//			
+//				if(imageX>=90 + k * 30&&imageX<=110 + k * 30&&imageY>=90 + i * 30&&imageY<=110 + i * 30) {
+//				game.fieldArray2[i][k] = 1;
+//				g.drawImage(shipPart, 100 + k * 30, 100 + i * 30, 30, 30, null);
+//				
+//				
+//				
+//			}
+//		}
+//			
+//			 g.drawImage(shipPart, imageX, imageY, null);
+//			}
+		
+			
 		for (int i = 0; i <= 10; i++) {
-			if(isFieldSet()) {
+			if(isFieldSet2()) {
 			g2d.drawLine(100 + i * 30, 100, 100 + i * 30, 400);
 			g2d.drawLine(100, 100 + i * 30, 400, 100 + i * 30);
 			}
-			if(isFieldSet2()) {
+			if(isFieldSet1()) {
 			g2d.drawLine(500 + i * 30, 100, 500 + i * 30, 400);
 			g2d.drawLine(500, 100 + i * 30, 800, 100 + i * 30);
 			}
@@ -169,11 +216,11 @@ public class SeaField extends JPanel {
 		
 		for (int i = 1; i <= 10; i++) {
 			String numb = Integer.toString(i);
-			if(isFieldSet()) {
+			if(isFieldSet2()) {
 			g2d.drawString(numb, 73, 93 + i * 30);
 			g2d.drawString("" + (char) ('A' + i - 1), 78 + i * 30, 93);
 			}
-			if(isFieldSet2()) {
+			if(isFieldSet1()) {
 			g2d.drawString(numb, 473, 93 + i * 30);
 			g2d.drawString("" + (char) ('A' + i - 1), 478 + i * 30, 93);
 
@@ -181,7 +228,7 @@ public class SeaField extends JPanel {
 		}
 		}
 		
-	}
+
 	
 	
 	
@@ -232,13 +279,16 @@ public class SeaField extends JPanel {
 		
 		devInfo = new JLabel("<html>Made by Mikhailo Mokryy and Andry Kovalenko, 2018</html>");
 		devInfo.setForeground(new Color(255, 255, 255));
-		devInfo.setFont(font.deriveFont(Font.PLAIN,11f));
+		devInfo.setFont(font.deriveFont(Font.PLAIN ,11f));
 		devInfo.setBackground(new Color(255, 255, 255));
 		devInfo.setBounds(622, 547, 300, 37);
 		add(devInfo);
 		
-		setFieldSet(false);
+		
+		setFieldSet1(false);
 		setFieldSet2(false);
+		setFieldEdible(false);
+		setField1(false);
 		setMenu(true);
 			
 	}
@@ -246,7 +296,8 @@ public class SeaField extends JPanel {
 	private void gameFrame() {
 		
 		playBtn.setVisible(false);
-		randomBtn.setVisible(false);
+		randomBtn2.setVisible(false);
+		
 		
 		setVisible(true);
 		setLayout(null);
@@ -259,24 +310,28 @@ public class SeaField extends JPanel {
 		goToMenuBtn.addActionListener(action);
 		add(goToMenuBtn);
 		
-		
+		setField2(true);
+		setField1(true);
 		setMenu(false);
-		setFieldSet(true);
+		setFieldSet1(true);
 		setFieldSet2(true);
+		setFieldEdible(true);
+		setField1(true);
 		
-		
-		
+
 
 	}
 	
-	private void setFieldFrame() {
+	private void setField2Frame() {
+		
 		
 		newGamePVP.setVisible(false);
 		newGamePVE.setVisible(false);
 		newGamePVE2.setVisible(false);
 		newGamePVE3.setVisible(false);
 		exitBtn.setVisible(false);
-		
+
+	
 		
 		setVisible(true);
 		setLayout(null);
@@ -289,23 +344,66 @@ public class SeaField extends JPanel {
 		playBtn.addActionListener(action);
 		add(playBtn);
 		
+		randomBtn2 = new JButton();
+		randomBtn2.setText("Random");
+		randomBtn2.setForeground(DARK_BLUE);
+		randomBtn2.setFont(font.deriveFont(20f));
+		randomBtn2.setBounds(300, 460, 150, 60);
+		randomBtn2.addActionListener(action);
+		add(randomBtn2);
 		
-		randomBtn = new JButton();
-		randomBtn.setText("Random");
-		randomBtn.setForeground(DARK_BLUE);
-		randomBtn.setFont(font.deriveFont(20f));
-		randomBtn.setBounds(300, 460, 150, 60);
-		randomBtn.addActionListener(action);
-		add(randomBtn);
+		
+		game.cleanEditorField();
+		game.fillField(game.fieldArray2, false);
+		
+	
+		flag =true;
+		setMenu(false);
+		setFieldSet1(true);
+		setFieldSet2(false);
+			
+		
+
+	}
+private void setFieldFrame() {
+		
+		newGamePVP.setVisible(false);
+		newGamePVE.setVisible(false);
+		newGamePVE2.setVisible(false);
+		newGamePVE3.setVisible(false);
+		exitBtn.setVisible(false);
 		
 		
+		setVisible(true);
+		setLayout(null);
+
+		nextBtn = new JButton();
+		nextBtn.setText("Next");
+		nextBtn.setForeground(DARK_BLUE);
+		nextBtn.setFont(font.deriveFont(20f));
+		nextBtn.setBounds(500, 460, 150, 60);
+		nextBtn.addActionListener(action);
+		add(nextBtn);
+		
+		
+		randomBtn1 = new JButton();
+		randomBtn1.setText("Random");
+		randomBtn1.setForeground(DARK_BLUE);
+		randomBtn1.setFont(font.deriveFont(20f));
+		randomBtn1.setBounds(300, 460, 150, 60);
+		randomBtn1.addActionListener(action);
+		add(randomBtn1);
+		
+		
+		game.cleanEditorField();
 		game.fillField(game.fieldArray1, false);
 	
-		
+	    flag =false;
+		 
 		
 		setMenu(false);
-		setFieldSet(true);
-		setFieldSet2(false);
+		setFieldSet1(false);
+		setFieldSet2(true);
 			
 
 	}
@@ -320,7 +418,9 @@ public class SeaField extends JPanel {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			if(isFieldSet()&&isFieldSet2()) {
+			
+
+			if(isFieldSet1()&&isFieldSet2()&&isFieldEdible()) {
 			if ((e.getButton() == 1) && (e.getClickCount() == 1)) {
 				if (turn % 2 == 0) {
 					if (prog == 1) {
@@ -421,12 +521,15 @@ public class SeaField extends JPanel {
 
 			}
 		
-			if(hits1==20) {
+			if(hits1==20&&isFieldEdible()) {
+				setFieldEdible(false);
 				JOptionPane.showMessageDialog(null,
 						"Player 1 wins!!!", "Message",
 						JOptionPane.INFORMATION_MESSAGE);
+				
 			}
-			if(hits2==20) {
+			if(hits2==20&&isFieldEdible()) {
+				setFieldEdible(false);
 				JOptionPane.showMessageDialog(null,
 						"Player 2 wins!!!", "Message",
 						JOptionPane.INFORMATION_MESSAGE);
@@ -436,8 +539,7 @@ public class SeaField extends JPanel {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-
+			
 		}
 
 		@Override
@@ -458,8 +560,11 @@ public class SeaField extends JPanel {
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			// TODO Auto-generated method stub
-
+//			if(isFieldSet()&&!isFieldSet2()&&!isFieldEdible()) {
+//			imageX = e.getX()-15;
+//		    imageY = e.getY()-15;
+//		    repaint();
+//			}
 		}
 
 		@Override
@@ -474,6 +579,11 @@ public class SeaField extends JPanel {
 				setCursor(new Cursor(Cursor.HAND_CURSOR));
 		}
 	}
+	
+	   @Override
+       public Dimension getPreferredSize() {
+           return new Dimension(900, 600);
+       }
 
 	private class MyActionListener implements ActionListener {
 
@@ -482,9 +592,9 @@ public class SeaField extends JPanel {
 			
 			
 			if (e.getSource().equals(newGamePVE)) {
-				 setFieldFrame();
+				setField2Frame();
 				game.startGame();
-				game.fillField(game.fieldArray1, false);
+				game.fillField(game.fieldArray1, true);
 				game.fillField(game.fieldArray2, false);
 				hits1=0;
 				hits2=0;
@@ -492,13 +602,15 @@ public class SeaField extends JPanel {
 				pl = "=>";
 				prog = 2;
 				robot.setCleverLvl(1);
+				isPVP = false;
 				field1Vis=true;
-				field2Vis=true;
+				field2Vis = false;
+				
 			}
 			if (e.getSource().equals(newGamePVE2)) {
-				 setFieldFrame();
+				 setField2Frame();
 				game.startGame();
-				game.fillField(game.fieldArray1, false);
+				game.fillField(game.fieldArray1, true);
 				game.fillField(game.fieldArray2, false);
 				hits1=0;
 				hits2=0;
@@ -506,13 +618,14 @@ public class SeaField extends JPanel {
 				pl = "=>";
 				prog = 2;
 				robot.setCleverLvl(2);
+				isPVP = false;
 				field1Vis=true;
-				field2Vis=true;
+				field2Vis = false;
 			}
 			if (e.getSource().equals(newGamePVE3)) {
-				setFieldFrame();
+				setField2Frame();
 				game.startGame();
-				game.fillField(game.fieldArray1, false);
+				game.fillField(game.fieldArray1, true);
 				game.fillField(game.fieldArray2, false);
 				hits1=0;
 				hits2=0;
@@ -520,10 +633,12 @@ public class SeaField extends JPanel {
 				pl = "=>";
 				prog = 2;
 				robot.setCleverLvl(3);
+				isPVP = false;
 				field1Vis=true;
-				field2Vis=true;
+				field2Vis = false;
 			}
 			if (e.getSource().equals(newGamePVP)) {
+				
 				setFieldFrame();
 				game.startGame();
 				game.fillField(game.fieldArray1, false);
@@ -533,29 +648,62 @@ public class SeaField extends JPanel {
 				turn = 1;
 				pl = "=>";
 				prog = 1;
+				isPVP = true;
 				field1Vis=true;
 				field2Vis=true;
+				
+			}
+			
+			if (e.getSource().equals(nextBtn)) {
+				setField2Frame();
+				nextBtn.setVisible(false);
+				randomBtn1.setVisible(false);
+				field1Vis =false;
+			
+				field2Vis = false;
+			
 			}
 			
 			if (e.getSource().equals(goToMenuBtn)) {
 				mainMenuFrame();
 				goToMenuBtn.setVisible(false);
-				
+				game.cleanEditorField();
+				game.startGame();
+						
 			}
 			
 			if (e.getSource().equals(playBtn)) {
-				gameFrame();
-
+				gameFrame(); 
+				field1Vis =true;
+				field2Vis = true;
 			}
 			
-			if (e.getSource().equals(randomBtn)) {
+			if (e.getSource().equals(randomBtn2)) {
+				field2Vis = true;
+				setField2(true);
+				setField1(false);
+				setFieldSet2(false);
+				setFieldSet1(true);
+				game.cleanEditorField();
+				game.cleanField(game.fieldArray2);
+			    game.fillField(game.fieldArray2, true);
+			    if(!isPVP) {
+			    	game.cleanField(game.fieldArray1);
+			    game.fillField(game.fieldArray1, true);
+			    }
+			}
+			
+			if (e.getSource().equals(randomBtn1)) {	
+				setField1(true);
+				setField2(false);
 				setFieldSet2(true);
-				game.startGame();
+				setFieldSet1(false);
+				game.cleanEditorField();
+				game.cleanField(game.fieldArray1);
 				game.fillField(game.fieldArray1, true);
-				game.fillField(game.fieldArray2, true);
-
-			}
 			
+			}
+	
 			
 			if (e.getSource().equals(exitBtn)) {
 				System.exit(0);
@@ -581,11 +729,11 @@ public class SeaField extends JPanel {
 		this.isMenu = isMenu;
 	}
 
-	public boolean isFieldSet() {
+	public boolean isFieldSet1() {
 		return isFieldSet1;
 	}
 
-	public void setFieldSet(boolean isFieldSet) {
+	public void setFieldSet1(boolean isFieldSet) {
 		this.isFieldSet1 = isFieldSet;
 	}
 
@@ -595,6 +743,30 @@ public class SeaField extends JPanel {
 
 	public void setFieldSet2(boolean isFieldSet2) {
 		this.isFieldSet2 = isFieldSet2;
+	}
+
+	public boolean isFieldEdible() {
+		return fieldEdible;
+	}
+
+	public void setFieldEdible(boolean fieldEdible) {
+		this.fieldEdible = fieldEdible;
+	}
+
+	public boolean isField1() {
+		return isField1;
+	}
+
+	public void setField1(boolean isField) {
+		this.isField1 = isField;
+	}
+
+	public boolean isField2() {
+		return isField2;
+	}
+
+	public void setField2(boolean isField2) {
+		this.isField2 = isField2;
 	}
 
 
