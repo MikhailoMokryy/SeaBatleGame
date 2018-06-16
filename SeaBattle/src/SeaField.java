@@ -17,17 +17,9 @@ import java.awt.event.MouseMotionListener;
 import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-
-import javax.swing.Timer;
-import javax.swing.RepaintManager;
-import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
 
 public class SeaField extends JPanel {
 
@@ -55,6 +47,7 @@ public class SeaField extends JPanel {
 	private int hits1;
 	private int hits2;
 	int imageX, imageY;
+	Thread soundTh;
 
 	public SeaField() {
 
@@ -85,12 +78,18 @@ public class SeaField extends JPanel {
 		setLayout(null);
 		action = new MyActionListener();
 	
-		mainMenuFrame();
-<<<<<<< HEAD
-=======
 		
-		Sound.playSound("Sounds/Wot2.wav");
->>>>>>> d34ba30edfe4f6df49c26e98a27d74d65b6e4541
+						
+
+		 soundTh = new Thread();	//Создание потока "myThready"
+		soundTh.start();
+		
+		
+		mainMenuFrame();
+
+		
+		//Sound.playSound("Sounds/Wot2.wav");    //made 0.5 lower
+
 
 //		 RepaintManager.currentManager(null).setDoubleBufferingEnabled(false);
 //		  shipPart = shipPart.getScaledInstance(30, 30, Image.SCALE_DEFAULT);
@@ -447,9 +446,10 @@ private void setFieldFrame() {
 								turn++;
 								pl = "<=";
 								turn++;
-								
+								Sound.playSound("Sounds/exp.wav").play(true);
 
 							} else if (game.fieldArray1[i][k] == 0) {
+								Sound.playSound("Sounds/bubble.wav").play(true);
 								game.fieldArray1[i][k] = -1;
 								pl = "=>";
 								turn++;
@@ -471,10 +471,11 @@ private void setFieldFrame() {
 							game.fieldArray2[i][k] = -2;
 							hits2++;
 							pl = "=>";
-
+							Sound.playSound("Sounds/exp.wav").play(true);
 							turn+=2;
 
 						} else if (game.fieldArray2[i][k] == 0) {
+							Sound.playSound("Sounds/bubble.wav").play(true);
 							game.fieldArray2[i][k] = -1;
 							pl = "<=";
 							if (prog == 2) {
@@ -494,11 +495,12 @@ private void setFieldFrame() {
 										i = robot.getX();
 										k = robot.getY();
 										if (game.fieldArray1[i][k] == 0) {
+											Sound.playSound("Sounds/bubble.wav").join();
 											game.fieldArray1[i][k] = -1;
 										}
 										repaint();
 										revalidate();
-										Sound.playSound("Sounds/explode!.wav").join();
+										Sound.playSound("Sounds/exp.wav").join();
 									}
 								} else if (game.fieldArray1[i][k] == 0)
 									game.fieldArray1[i][k] = -1;
