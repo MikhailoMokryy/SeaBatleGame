@@ -495,12 +495,12 @@ private void setFieldFrame() {
 										i = robot.getX();
 										k = robot.getY();
 										if (game.fieldArray1[i][k] == 0) {
-											Sound.playSound("Sounds/bubble.wav").join();
+											Sound.playSound("Sounds/bubble.wav").play(true);
 											game.fieldArray1[i][k] = -1;
 										}
 										repaint();
 										revalidate();
-										Sound.playSound("Sounds/exp.wav").join();
+										Sound.playSound("Sounds/exp.wav").play(true);
 									}
 								} else if (game.fieldArray1[i][k] == 0)
 									game.fieldArray1[i][k] = -1;
