@@ -1,5 +1,7 @@
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,8 +12,13 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 public class MainClass extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-
+	private  Dimension dim;
+	
 	/**
 	 * Launch the application.
 	 * 
@@ -39,13 +46,15 @@ public class MainClass extends JFrame {
 	 */
 	public MainClass() {
 		setTitle("ShipBattle");
+		dim = Toolkit.getDefaultToolkit().getScreenSize();
+		dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(200, 200, 900, 600);
+		setBounds((dim.width-900)/2, (dim.height-600)/2, 900, 600);
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-
+	
 		SeaField sf = new SeaField();
 		sf.setBounds(0, 0, 900, 600);
 		contentPane.add(sf);

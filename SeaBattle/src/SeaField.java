@@ -52,7 +52,6 @@ public class SeaField extends JPanel {
 	private boolean field2Vis;
 	private boolean isMenu,fieldEdible;
 	private boolean isFieldSet1,isFieldSet2,isField1,isField2, flag, isPVP;
-	
 	private int hits1;
 	private int hits2;
 	int imageX, imageY;
@@ -87,7 +86,6 @@ public class SeaField extends JPanel {
 		action = new MyActionListener();
 	
 		mainMenuFrame();
-
 
 //		 RepaintManager.currentManager(null).setDoubleBufferingEnabled(false);
 //		  shipPart = shipPart.getScaledInstance(30, 30, Image.SCALE_DEFAULT);
@@ -512,18 +510,25 @@ private void setFieldFrame() {
 
 			}
 		
+		JFrame frame = new JFrame();
+		frame.setBounds(200, 200, 900, 600);
+		frame.setVisible(false);
 			if(hits1==20&&isFieldEdible()) {
+				
 				setFieldEdible(false);
-				JOptionPane.showMessageDialog(null,
+				JOptionPane.showMessageDialog(	frame,
 						"Player 1 wins!!!", "Message",
 						JOptionPane.INFORMATION_MESSAGE);
 				
+				
 			}
 			if(hits2==20&&isFieldEdible()) {
+
 				setFieldEdible(false);
-				JOptionPane.showMessageDialog(null,
+				JOptionPane.showMessageDialog(	frame,
 						"Player 2 wins!!!", "Message",
 						JOptionPane.INFORMATION_MESSAGE);
+				
 			}
 
 		}
