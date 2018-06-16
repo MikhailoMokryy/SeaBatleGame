@@ -34,21 +34,21 @@ public class Sound implements AutoCloseable {
 		}
 	}
 
-	// true если звук успешно загружен, false если произошла ошибка
+	// true  if sound download, false if some trouble
 	public boolean isReleased() {
 		return released;
 	}
 	
-	// проигрывается ли звук в данный момент
+	// if music is plaiyng now
 	public boolean isPlaying() {
 		return playing;
 	}
 
-	// Запуск
+	// Start
 	/*
-	  breakOld определяет поведение, если звук уже играется
-	  Если breakOld==true, о звук будет прерван и запущен заново
-	  Иначе ничего не произойдёт
+	  breakOld defines behavior if the sound is already playing
+If breakOld == true, o the sound is interrupted and restarted
+Otherwise nothing will happen
 	*/
 	public void play(boolean breakOld) {
 		if (released) {
@@ -65,12 +65,12 @@ public class Sound implements AutoCloseable {
 		}
 	}
 	
-	// То же самое, что и play(true)
+	// the same as play(true)
 	public void play() {
 		play(true);
 	}
 	
-	// Останавливает воспроизведение
+	// stop playing
 	public void stop() {
 		if (playing) {
 			clip.stop();
@@ -89,9 +89,9 @@ public class Sound implements AutoCloseable {
 			}
 	}
 
-	// Установка громкости
+	//Setting the volume
 	/*
-	  x долже быть в пределах от 0 до 1 (от самого тихого к самому громкому)
+	*x must be between 0 and 1 (from the quietest to the loudest)
 	*/
 	public void setVolume(float x) {
 		if (x<0) x = 0;
@@ -101,7 +101,7 @@ public class Sound implements AutoCloseable {
 		volumeControl.setValue((max-min)*x+min);
 	}
 	
-	// Возвращает текущую громкость (число от 0 до 1)
+	// Returns the current volume (number from 0 to 1)
 	public float getVolume() {
 		float v = volumeControl.getValue();
 		float min = volumeControl.getMinimum();
@@ -109,7 +109,7 @@ public class Sound implements AutoCloseable {
 		return (v-min)/(max-min);
 	}
 
-	// Дожидается окончания проигрывания звука
+	// Waiting for the sound to stop playing
 	public void join() {
 		if (!released) return;
 		synchronized(clip) {
@@ -120,7 +120,7 @@ public class Sound implements AutoCloseable {
 		}
 	}
 	
-	// Статический метод, для удобства
+	// Static method
 	public static Sound playSound(String path) {
 		File f = new File(path);
 		Sound snd = new Sound(f);

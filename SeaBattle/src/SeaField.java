@@ -86,6 +86,11 @@ public class SeaField extends JPanel {
 		action = new MyActionListener();
 	
 		mainMenuFrame();
+<<<<<<< HEAD
+=======
+		
+		Sound.playSound("Sounds/Wot2.wav");
+>>>>>>> d34ba30edfe4f6df49c26e98a27d74d65b6e4541
 
 //		 RepaintManager.currentManager(null).setDoubleBufferingEnabled(false);
 //		  shipPart = shipPart.getScaledInstance(30, 30, Image.SCALE_DEFAULT);
