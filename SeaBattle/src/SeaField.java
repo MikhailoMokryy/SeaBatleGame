@@ -555,7 +555,10 @@ private void setFieldFrame() {
 				JOptionPane.showMessageDialog(null,
 						"Player 1 wins!!!", "Message",
 						JOptionPane.INFORMATION_MESSAGE);
-				
+				field1Vis=true;
+				field2Vis=true;
+				repaint();
+				revalidate();
 				
 			}
 			if(hits2==20&&isFieldEdible()) {
@@ -564,7 +567,10 @@ private void setFieldFrame() {
 				JOptionPane.showMessageDialog(null,
 						"Player 2 wins!!!", "Message",
 						JOptionPane.INFORMATION_MESSAGE);
-				
+				field1Vis=true;
+				field2Vis=true;
+				repaint();
+				revalidate();
 			}
 
 		}
