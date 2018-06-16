@@ -54,9 +54,9 @@ public class SeaField extends JPanel {
 		game = new GameLogic();
 		game.startGame();
 		
-		robot = new Comp2(game.fieldArray1, 2);
+		robot = new Comp2(game.fieldArray2, 2);
 		turn = 1;
-		pl = "=>";
+		pl = "<=";
 		prog = 2; 
 		field1Vis=true;
 		field2Vis=true;
@@ -428,8 +428,8 @@ private void setFieldFrame() {
 
 			if(isFieldSet1()&&isFieldSet2()&&isFieldEdible()) {
 			if ((e.getButton() == 1) && (e.getClickCount() == 1)) {
-				if (turn % 2 == 0) {
-					if (prog == 1) {
+				if (turn % 2 != 0) {
+					
 
 						x = e.getX();
 						y = e.getY();
@@ -443,24 +443,51 @@ private void setFieldFrame() {
 								game.sendShoot(i, k, game.fieldArray1);
 								game.fieldArray1[i][k] = -2;
 								hits1++;
-								turn++;
+								
 								pl = "<=";
-								turn++;
+								turn+=2;
 								Sound.playSound("Sounds/exp.wav").play(true);
 
 							} else if (game.fieldArray1[i][k] == 0) {
 								Sound.playSound("Sounds/bubble.wav").play(true);
 								game.fieldArray1[i][k] = -1;
 								pl = "=>";
+								if (prog == 2) {
+									pl = "<=";
+									turn++;
+									robot.tryShot();
+									i = robot.getX();
+									k = robot.getY();
+									if (game.fieldArray2[i][k] >= 1&&game.fieldArray2[i][k] <= 4) {
+										while(game.fieldArray2[i][k] >= 1&&game.fieldArray2[i][k] <= 4) {
+											hits2++;
+											game.sendShoot(i, k, game.fieldArray2);
+											game.fieldArray2[i][k] = -2;
+											if(hits2==20)
+												break;
+											robot.tryShot();
+											i = robot.getX();
+											k = robot.getY();
+											if (game.fieldArray2[i][k] == 0) {
+												Sound.playSound("Sounds/bubble.wav").join();
+												game.fieldArray2[i][k] = -1;
+											}
+											repaint();
+											revalidate();
+											Sound.playSound("Sounds/exp.wav").join();
+										}
+									} else if (game.fieldArray2[i][k] == 0)
+										game.fieldArray2[i][k] = -1;
+								}
 								turn++;
 								
 							}
 							repaint();
 							revalidate();
 						}
-					}
+					
 				} else {
-
+					if (prog == 1) {
 					if ((x > 500) && (y > 100) && (x < 800) && (y < 400)) {
 
 						int i = (y - 100) / 30;
@@ -478,33 +505,7 @@ private void setFieldFrame() {
 							Sound.playSound("Sounds/bubble.wav").play(true);
 							game.fieldArray2[i][k] = -1;
 							pl = "<=";
-							if (prog == 2) {
-								pl = "=>";
-								turn++;
-								robot.tryShot();
-								i = robot.getX();
-								k = robot.getY();
-								if (game.fieldArray1[i][k] >= 1&&game.fieldArray1[i][k] <= 4) {
-									while(game.fieldArray1[i][k] >= 1&&game.fieldArray1[i][k] <= 4) {
-										hits1++;
-										game.sendShoot(i, k, game.fieldArray1);
-										game.fieldArray1[i][k] = -2;
-										if(hits1==20)
-											break;
-										robot.tryShot();
-										i = robot.getX();
-										k = robot.getY();
-										if (game.fieldArray1[i][k] == 0) {
-											Sound.playSound("Sounds/bubble.wav").join();
-											game.fieldArray1[i][k] = -1;
-										}
-										repaint();
-										revalidate();
-										Sound.playSound("Sounds/exp.wav").join();
-									}
-								} else if (game.fieldArray1[i][k] == 0)
-									game.fieldArray1[i][k] = -1;
-							}
+							
 							turn++;
 						}
 						
@@ -512,6 +513,7 @@ private void setFieldFrame() {
 						revalidate();
 					}
 
+				}
 				}
 			}
 
@@ -600,7 +602,7 @@ private void setFieldFrame() {
 				hits1=0;
 				hits2=0;
 				turn = 1;
-				pl = "=>";
+				pl = "<=";
 				prog = 2;
 				robot.setCleverLvl(1);
 				isPVP = false;
@@ -616,7 +618,7 @@ private void setFieldFrame() {
 				hits1=0;
 				hits2=0;
 				turn = 1;
-				pl = "=>";
+				pl = "<=";
 				prog = 2;
 				robot.setCleverLvl(2);
 				isPVP = false;
@@ -631,7 +633,7 @@ private void setFieldFrame() {
 				hits1=0;
 				hits2=0;
 				turn = 1;
-				pl = "=>";
+				pl = "<=";
 				prog = 2;
 				robot.setCleverLvl(3);
 				isPVP = false;
@@ -647,7 +649,7 @@ private void setFieldFrame() {
 				hits1=0;
 				hits2=0;
 				turn = 1;
-				pl = "=>";
+				pl = "<=";
 				prog = 1;
 				isPVP = true;
 				field1Vis=true;
