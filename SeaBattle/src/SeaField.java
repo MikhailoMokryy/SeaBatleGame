@@ -505,7 +505,7 @@ private void setFieldFrame() {
 							Sound.playSound("Sounds/bubble.wav").play(true);
 							game.fieldArray2[i][k] = -1;
 							pl = "<=";
-<<<<<<< HEAD
+
 							if (prog == 2) {
 								pl = "=>";
 								turn++;
@@ -533,9 +533,8 @@ private void setFieldFrame() {
 								} else if (game.fieldArray1[i][k] == 0)
 									game.fieldArray1[i][k] = -1;
 							}
-=======
-							
->>>>>>> 5e773d21912ffda34c1c9248d9d901686c357ce8
+
+
 							turn++;
 						}
 						
@@ -707,8 +706,10 @@ private void setFieldFrame() {
 			
 			if (e.getSource().equals(playBtn)) {
 				gameFrame(); 
-				field1Vis =true;
-				field2Vis = true;
+				field1Vis = false;
+				if(isPVP)
+				field2Vis =false;
+				else field2Vis =true;
 			}
 			
 			if (e.getSource().equals(randomBtn2)) {
