@@ -23,11 +23,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-<<<<<<< HEAD
+
 import javax.swing.Timer;
-=======
 import javax.swing.RepaintManager;
->>>>>>> e724fcf0aa79f0717b36015c4655e0696b7efd27
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
@@ -89,10 +87,7 @@ public class SeaField extends JPanel {
 		action = new MyActionListener();
 	
 		mainMenuFrame();
-<<<<<<< HEAD
-		
-		
-=======
+
 
 //		 RepaintManager.currentManager(null).setDoubleBufferingEnabled(false);
 //		  shipPart = shipPart.getScaledInstance(30, 30, Image.SCALE_DEFAULT);
@@ -100,7 +95,7 @@ public class SeaField extends JPanel {
 		//TODO
 		   
 
->>>>>>> e724fcf0aa79f0717b36015c4655e0696b7efd27
+
 		
 	}
 
@@ -500,7 +495,7 @@ private void setFieldFrame() {
 										}
 										repaint();
 										revalidate();
-								    	
+										Sound.playSound("Sounds/explode!.wav").join();
 									}
 								} else if (game.fieldArray1[i][k] == 0)
 									game.fieldArray1[i][k] = -1;
@@ -724,8 +719,7 @@ private void setFieldFrame() {
 	public void setMenu(boolean isMenu) {
 		this.isMenu = isMenu;
 	}
-<<<<<<< HEAD
-=======
+
 
 	public boolean isFieldSet1() {
 		return isFieldSet1;
@@ -768,5 +762,5 @@ private void setFieldFrame() {
 	}
 
 
->>>>>>> e724fcf0aa79f0717b36015c4655e0696b7efd27
+
 }
