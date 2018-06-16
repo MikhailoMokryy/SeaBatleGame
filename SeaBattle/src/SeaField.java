@@ -510,13 +510,11 @@ private void setFieldFrame() {
 
 			}
 		
-		JFrame frame = new JFrame();
-		frame.setBounds(200, 200, 900, 600);
-		frame.setVisible(false);
+	
 			if(hits1==20&&isFieldEdible()) {
 				
 				setFieldEdible(false);
-				JOptionPane.showMessageDialog(	frame,
+				JOptionPane.showMessageDialog(null,
 						"Player 1 wins!!!", "Message",
 						JOptionPane.INFORMATION_MESSAGE);
 				
@@ -525,7 +523,7 @@ private void setFieldFrame() {
 			if(hits2==20&&isFieldEdible()) {
 
 				setFieldEdible(false);
-				JOptionPane.showMessageDialog(	frame,
+				JOptionPane.showMessageDialog(null,
 						"Player 2 wins!!!", "Message",
 						JOptionPane.INFORMATION_MESSAGE);
 				
