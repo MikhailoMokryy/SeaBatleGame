@@ -715,12 +715,12 @@ private void setFieldFrame() {
 			
 			if (e.getSource().equals(playBtn)) {
 				gameFrame(); 
-//				field1Vis = false;
-//				if(isPVP)
-//				field2Vis =false;
-//				else field2Vis =true;
-				field1Vis=true;
-				field2Vis=true;
+				field1Vis = false;
+				if(isPVP)
+				field2Vis =false;
+				else field2Vis =true;
+//				field1Vis=true;
+//				field2Vis=true;
 			}
 			
 			if (e.getSource().equals(randomBtn2)) {
