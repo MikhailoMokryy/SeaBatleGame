@@ -1,14 +1,10 @@
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -35,36 +31,33 @@ public class SeaField extends JPanel {
 	private GameLogic game;
 	private int x, y;
 	private JLabel devInfo;
-	private JButton newGamePVE,newGamePVE2,newGamePVE3,newGamePVP,goToMenuBtn, exitBtn, playBtn, randomBtn1,randomBtn2, nextBtn;	
+	private JButton newGamePVE, newGamePVE2, newGamePVE3, newGamePVP, goToMenuBtn, exitBtn, playBtn, randomBtn1,
+			randomBtn2, nextBtn;
 	private Comp2 robot;
 	private int turn;
 	private String pl;
-	private int prog;
 	private boolean field1Vis;
 	private boolean field2Vis;
-	private boolean isMenu,fieldEdible;
-	private boolean isFieldSet1,isFieldSet2,isField1,isField2, flag, isPVP;
+	private boolean isMenu, fieldEdible;
+	private boolean isFieldSet1, isFieldSet2, isField1, isField2, flag, isPVP;
 	private int hits1;
 	private int hits2;
-	int imageX, imageY;
-
 
 	public SeaField() {
 
 		game = new GameLogic();
 		game.startGame();
-		
+
 		robot = new Comp2(game.fieldArray2, 2);
 		turn = 1;
 		pl = "<=";
-		prog = 2; 
-		field1Vis=true;
-		field2Vis=true;
+		field1Vis = true;
+		field2Vis = true;
 
 		addMouseListener(new MyMouseListener());
 		addMouseMotionListener(new MyMouseMotionListener());
 		setFocusable(true);
-		
+
 		try {
 			background = ImageIO.read(new File("Pics/water.png")); // TODO change PATH
 			shipPart = ImageIO.read(new File("Pics/gray_sqr.png"));
@@ -74,168 +67,139 @@ public class SeaField extends JPanel {
 			e.printStackTrace();
 			System.err.println("Change pictures directory!");
 		}
-		
+
 		setLayout(null);
 		action = new MyActionListener();
 		mainMenuFrame();
-		
 
-		//Sound.playSound("Sounds/Wot2.wav").play();    
+		// Sound.playSound("Sounds/Wot2.wav").play();
 
 
-//		 RepaintManager.currentManager(null).setDoubleBufferingEnabled(false);
-//		  shipPart = shipPart.getScaledInstance(30, 30, Image.SCALE_DEFAULT);
-		  
-		//TODO
-		   	
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
-	
+
 		super.paintComponent(g);
-		
+
 		g2d = (Graphics2D) g;
 		g2d.drawImage(background, 0, 0, 900, 600, null);
-		
+
 		g2d.setFont(font.deriveFont(30f));
 		g2d.setColor(DARK_BLUE);
-		
-		if(!isMenu()) {
-			
-		if(isFieldSet2())	
-		g2d.drawString("Player 1", 190, 50);
-		if(isFieldSet1()) 
-		g2d.drawString("Player 2", 590, 50);
-		
 
-		if(isField1()&&isField2()) 
-			g2d.drawString(pl, 440, 50);
-		
-		for (int i = 0; i < 10; i++) {
-			for (int k = 0; k < 10; k++) {
-				
-				if(field1Vis) {
-					if(isField1()) {
-				if (game.fieldArray1[i][k] >= 1&&game.fieldArray1[i][k] <= 4) {
-					g.drawImage(shipPart, 100 + k * 30, 100 + i * 30, 30, 30, null);
+		if (!isMenu()) {
 
-				}
+			if (isFieldSet2())
+				g2d.drawString("Player 1", 190, 50);
+			if (isFieldSet1())
+				g2d.drawString("Player 2", 590, 50);
+
+			if (isField1() && isField2())
+				g2d.drawString(pl, 440, 50);
+
+			for (int i = 0; i < 10; i++) {
+				for (int k = 0; k < 10; k++) {
+
+					if (field1Vis) {
+						if (isField1()) {
+							if (game.fieldArray1[i][k] >= 1 && game.fieldArray1[i][k] <= 4) {
+								g.drawImage(shipPart, 100 + k * 30, 100 + i * 30, 30, 30, null);
+
+							}
+						}
 					}
-				}
-				if (game.fieldArray1[i][k] == -1) {
-					g.drawImage(bomb, 100 + k * 30, 100 + i * 30, 30, 30, null);
-				}
-
-				if (game.fieldArray1[i][k] == -2) {
-					g.drawImage(hitPart, 100 + k * 30, 100 + i * 30, 30, 30, null);
-					g.drawImage(bomb, 100 + k * 30, 100 + i * 30, 30, 30, null);
-				}
-				
-				if(field2Vis) {
-					if(isField2()) {
-				if (game.fieldArray2[i][k] >= 1&&game.fieldArray2[i][k] <= 4) {
-					g.drawImage(shipPart, 500 + k * 30, 100 + i * 30, 30, 30, null);
-				}
+					if (game.fieldArray1[i][k] == -1) {
+						g.drawImage(bomb, 100 + k * 30, 100 + i * 30, 30, 30, null);
 					}
-				}
-				
-				if (game.fieldArray2[i][k] == -1) {
-					g.drawImage(bomb, 500 + k * 30, 100 + i * 30, 30, 30, null);
-				}
 
-				if (game.fieldArray2[i][k] == -2) {
-					g.drawImage(hitPart, 500 + k * 30, 100 + i * 30, 30, 30, null);
-					g.drawImage(bomb, 500 + k * 30, 100 + i * 30, 30, 30, null);
+					if (game.fieldArray1[i][k] == -2) {
+						g.drawImage(hitPart, 100 + k * 30, 100 + i * 30, 30, 30, null);
+						g.drawImage(bomb, 100 + k * 30, 100 + i * 30, 30, 30, null);
+					}
+
+					if (field2Vis) {
+						if (isField2()) {
+							if (game.fieldArray2[i][k] >= 1 && game.fieldArray2[i][k] <= 4) {
+								g.drawImage(shipPart, 500 + k * 30, 100 + i * 30, 30, 30, null);
+							}
+						}
+					}
+
+					if (game.fieldArray2[i][k] == -1) {
+						g.drawImage(bomb, 500 + k * 30, 100 + i * 30, 30, 30, null);
+					}
+
+					if (game.fieldArray2[i][k] == -2) {
+						g.drawImage(hitPart, 500 + k * 30, 100 + i * 30, 30, 30, null);
+						g.drawImage(bomb, 500 + k * 30, 100 + i * 30, 30, 30, null);
+					}
+
 				}
 
 			}
-			
-		}
-			
+
 		}
 		g2d.setColor(DARK_BLUE);
-		
-		
-		if(!isFieldSet2()&&isFieldSet1()&&flag) {
-		for (int i = 0; i < 8; i++) {
-			for (int k = 0; k < 7; k++) {
-				if (game.chooserArray[i][k] >= 1&&game.chooserArray[i][k] <= 4) {
-					g.drawImage(shipPart, 100 + k * 30, 100 + i * 30, 30, 30, null);
 
-				}
-			}
-		}	
-	}	
-		if(isFieldSet2()&&!isFieldSet1()&&!isField1()&&!flag) {
+		if (!isFieldSet2() && isFieldSet1() && flag) {
 			for (int i = 0; i < 8; i++) {
 				for (int k = 0; k < 7; k++) {
-					if (game.chooserArray[i][k] >= 1&&game.chooserArray[i][k] <= 4) {
+					if (game.chooserArray[i][k] >= 1 && game.chooserArray[i][k] <= 4) {
+						g.drawImage(shipPart, 100 + k * 30, 100 + i * 30, 30, 30, null);
+
+					}
+				}
+			}
+		}
+		if (isFieldSet2() && !isFieldSet1() && !isField1() && !flag) {
+			for (int i = 0; i < 8; i++) {
+				for (int k = 0; k < 7; k++) {
+					if (game.chooserArray[i][k] >= 1 && game.chooserArray[i][k] <= 4) {
 						g.drawImage(shipPart, 500 + k * 30, 100 + i * 30, 30, 30, null);
 
 					}
 				}
-			}	
-		}	
-		
-//		//TODO
-//			for (int i = 0; i < 10; i++) {
-//				for (int k = 0; k < 10; k++) {
-//			
-//				if(imageX>=90 + k * 30&&imageX<=110 + k * 30&&imageY>=90 + i * 30&&imageY<=110 + i * 30) {
-//				game.fieldArray2[i][k] = 1;
-//				g.drawImage(shipPart, 100 + k * 30, 100 + i * 30, 30, 30, null);
-//				
-//				
-//				
-//			}
-//		}
-//			
-//			 g.drawImage(shipPart, imageX, imageY, null);
-//			}
-		
-			
-		for (int i = 0; i <= 10; i++) {
-			if(isFieldSet2()) {
-			g2d.drawLine(100 + i * 30, 100, 100 + i * 30, 400);
-			g2d.drawLine(100, 100 + i * 30, 400, 100 + i * 30);
-			}
-			if(isFieldSet1()) {
-			g2d.drawLine(500 + i * 30, 100, 500 + i * 30, 400);
-			g2d.drawLine(500, 100 + i * 30, 800, 100 + i * 30);
 			}
 		}
-		
+
+
+		for (int i = 0; i <= 10; i++) {
+			if (isFieldSet2()) {
+				g2d.drawLine(100 + i * 30, 100, 100 + i * 30, 400);
+				g2d.drawLine(100, 100 + i * 30, 400, 100 + i * 30);
+			}
+			if (isFieldSet1()) {
+				g2d.drawLine(500 + i * 30, 100, 500 + i * 30, 400);
+				g2d.drawLine(500, 100 + i * 30, 800, 100 + i * 30);
+			}
+		}
+
 		g2d.setFont(font.deriveFont(20f));
 		g2d.setColor(DARK_BLUE);
-		
+
 		for (int i = 1; i <= 10; i++) {
 			String numb = Integer.toString(i);
-			if(isFieldSet2()) {
-			g2d.drawString(numb, 73, 93 + i * 30);
-			g2d.drawString("" + (char) ('A' + i - 1), 78 + i * 30, 93);
+			if (isFieldSet2()) {
+				g2d.drawString(numb, 73, 93 + i * 30);
+				g2d.drawString("" + (char) ('A' + i - 1), 78 + i * 30, 93);
 			}
-			if(isFieldSet1()) {
-			g2d.drawString(numb, 473, 93 + i * 30);
-			g2d.drawString("" + (char) ('A' + i - 1), 478 + i * 30, 93);
+			if (isFieldSet1()) {
+				g2d.drawString(numb, 473, 93 + i * 30);
+				g2d.drawString("" + (char) ('A' + i - 1), 478 + i * 30, 93);
 
 			}
 		}
-		}
-		
+	}
 
-	
-	
-	
 	/**
-	* Метод відображення основного меню.
-	*/
-	private void mainMenuFrame()  {
-	
+	 * Метод відображення основного меню.
+	 */
+	private void mainMenuFrame() {
+
 		setLayout(null);
 		setVisible(true);
-	
-		
+
 		newGamePVE = new JButton();
 		newGamePVE.setText("Low");
 		newGamePVE.setForeground(DARK_BLUE);
@@ -271,29 +235,27 @@ public class SeaField extends JPanel {
 		exitBtn.setBounds(350, 440, 200, 60);
 		exitBtn.addActionListener(action);
 		add(exitBtn);
-		
+
 		devInfo = new JLabel("<html>Made by Mikhailo Mokryy and Andry Kovalenko, 2018</html>");
 		devInfo.setForeground(new Color(255, 255, 255));
-		devInfo.setFont(font.deriveFont(Font.PLAIN ,11f));
+		devInfo.setFont(font.deriveFont(Font.PLAIN, 11f));
 		devInfo.setBackground(new Color(255, 255, 255));
 		devInfo.setBounds(622, 547, 300, 37);
 		add(devInfo);
-		
-		
+
 		setFieldSet1(false);
 		setFieldSet2(false);
 		setFieldEdible(false);
 		setField1(false);
 		setMenu(true);
-			
+
 	}
-	
+
 	private void gameFrame() {
-		
+
 		playBtn.setVisible(false);
 		randomBtn2.setVisible(false);
-		
-		
+
 		setVisible(true);
 		setLayout(null);
 
@@ -304,7 +266,7 @@ public class SeaField extends JPanel {
 		goToMenuBtn.setBounds(375, 460, 150, 60);
 		goToMenuBtn.addActionListener(action);
 		add(goToMenuBtn);
-		
+
 		setField2(true);
 		setField1(true);
 		setMenu(false);
@@ -312,22 +274,17 @@ public class SeaField extends JPanel {
 		setFieldSet2(true);
 		setFieldEdible(true);
 		setField1(true);
-		
-
 
 	}
-	
+
 	private void setField2Frame() {
-		
-		
+
 		newGamePVP.setVisible(false);
 		newGamePVE.setVisible(false);
 		newGamePVE2.setVisible(false);
 		newGamePVE3.setVisible(false);
 		exitBtn.setVisible(false);
 
-	
-		
 		setVisible(true);
 		setLayout(null);
 
@@ -338,7 +295,7 @@ public class SeaField extends JPanel {
 		playBtn.setBounds(500, 460, 150, 60);
 		playBtn.addActionListener(action);
 		add(playBtn);
-		
+
 		randomBtn2 = new JButton();
 		randomBtn2.setText("Random");
 		randomBtn2.setForeground(DARK_BLUE);
@@ -346,29 +303,25 @@ public class SeaField extends JPanel {
 		randomBtn2.setBounds(300, 460, 150, 60);
 		randomBtn2.addActionListener(action);
 		add(randomBtn2);
-		
-		
+
 		game.cleanEditorField();
 		game.fillField(game.fieldArray2, false);
-		
-	
-		flag =true;
+
+		flag = true;
 		setMenu(false);
 		setFieldSet1(true);
 		setFieldSet2(false);
-			
-		
 
 	}
-private void setFieldFrame() {
-		
+
+	private void setFieldFrame() {
+
 		newGamePVP.setVisible(false);
 		newGamePVE.setVisible(false);
 		newGamePVE2.setVisible(false);
 		newGamePVE3.setVisible(false);
 		exitBtn.setVisible(false);
-		
-		
+
 		setVisible(true);
 		setLayout(null);
 
@@ -379,8 +332,7 @@ private void setFieldFrame() {
 		nextBtn.setBounds(500, 460, 150, 60);
 		nextBtn.addActionListener(action);
 		add(nextBtn);
-		
-		
+
 		randomBtn1 = new JButton();
 		randomBtn1.setText("Random");
 		randomBtn1.setForeground(DARK_BLUE);
@@ -388,18 +340,15 @@ private void setFieldFrame() {
 		randomBtn1.setBounds(300, 460, 150, 60);
 		randomBtn1.addActionListener(action);
 		add(randomBtn1);
-		
-		
+
 		game.cleanEditorField();
 		game.fillField(game.fieldArray1, false);
-	
-	    flag =false;
-		 
-		
+
+		flag = false;
+
 		setMenu(false);
 		setFieldSet1(false);
 		setFieldSet2(true);
-			
 
 	}
 
@@ -413,13 +362,10 @@ private void setFieldFrame() {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			
-			
 
-			if(isFieldSet1()&&isFieldSet2()&&isFieldEdible()) {
-			if ((e.getButton() == 1) && (e.getClickCount() == 1)) {
-				if (turn % 2 != 0) {
-					
+			if (isFieldSet1() && isFieldSet2() && isFieldEdible()) {
+				if ((e.getButton() == 1) && (e.getClickCount() == 1)) {
+					if (turn % 2 != 0) {
 
 						x = e.getX();
 						y = e.getY();
@@ -429,15 +375,15 @@ private void setFieldFrame() {
 							int i = (y - 100) / 30;
 							int k = (x - 100) / 30;
 
-							if (game.fieldArray1[i][k] >= 1&&game.fieldArray1[i][k] <= 4) {
+							if (game.fieldArray1[i][k] >= 1 && game.fieldArray1[i][k] <= 4) {
 								game.sendShoot(i, k, game.fieldArray1);
 								game.fieldArray1[i][k] = -2;
-								hits1++;	
+								hits1++;
 								pl = "<=";
-								turn+=2;
+								turn += 2;
 								Sound.playSound("Sounds/exp.wav").play();
 
-							} else if (game.fieldArray1[i][k] == 0) {		
+							} else if (game.fieldArray1[i][k] == 0) {
 								game.fieldArray1[i][k] = -1;
 								Sound.playSound("Sounds/bubble.wav").play();
 								pl = "=>";
@@ -447,19 +393,19 @@ private void setFieldFrame() {
 									robot.tryShot();
 									i = robot.getX();
 									k = robot.getY();
-									if (game.fieldArray2[i][k] >= 1&&game.fieldArray2[i][k] <= 4) {
-										while(game.fieldArray2[i][k] >= 1&&game.fieldArray2[i][k] <= 4) {
+									if (game.fieldArray2[i][k] >= 1 && game.fieldArray2[i][k] <= 4) {
+										while (game.fieldArray2[i][k] >= 1 && game.fieldArray2[i][k] <= 4) {
 											hits2++;
 											game.sendShoot(i, k, game.fieldArray2);
 											game.fieldArray2[i][k] = -2;
-											if(hits2==20)
+											if (hits2 == 20)
 												break;
 											robot.tryShot();
 											i = robot.getX();
 											k = robot.getY();
-											if (game.fieldArray2[i][k] == 0) {					
+											if (game.fieldArray2[i][k] == 0) {
 												game.fieldArray2[i][k] = -1;
-												Sound.playSound("Sounds/bubble.wav").join();
+												Sound.playSound("Sounds/bubble.wav").join(); //TODO change delay
 											}
 											repaint();
 											revalidate();
@@ -470,108 +416,101 @@ private void setFieldFrame() {
 									Sound.playSound("Sounds/bubble.wav").play();
 								}
 								turn++;
-								
+
 							}
 							repaint();
 							revalidate();
 						}
-					
-				} else {
-					if (isPVP) {
-					if ((x > 500) && (y > 100) && (x < 800) && (y < 400)) {
 
-						int i = (y - 100) / 30;
-						int k = (x - 500) / 30;
+					} else {
+						if (isPVP) {
+							if ((x > 500) && (y > 100) && (x < 800) && (y < 400)) {
 
-						if (game.fieldArray2[i][k] >= 1&&game.fieldArray2[i][k] <= 4) {
-							game.sendShoot(i, k, game.fieldArray2);
-							game.fieldArray2[i][k] = -2;
-							hits2++;
-							pl = "=>";
-							Sound.playSound("Sounds/exp.wav").play();
-							turn+=2;
+								int i = (y - 100) / 30;
+								int k = (x - 500) / 30;
 
-						} else if (game.fieldArray2[i][k] == 0) {			
-							game.fieldArray2[i][k] = -1;
-							Sound.playSound("Sounds/bubble.wav").play();
-							pl = "<=";
+								if (game.fieldArray2[i][k] >= 1 && game.fieldArray2[i][k] <= 4) {
+									game.sendShoot(i, k, game.fieldArray2);
+									game.fieldArray2[i][k] = -2;
+									hits2++;
+									pl = "=>";
+									Sound.playSound("Sounds/exp.wav").play();
+									turn += 2;
 
-							if (!isPVP) {
-								pl = "=>";
-								turn++;
-								robot.tryShot();
-								i = robot.getX();
-								k = robot.getY();
-								if (game.fieldArray1[i][k] >= 1&&game.fieldArray1[i][k] <= 4) {
-									while(game.fieldArray1[i][k] >= 1&&game.fieldArray1[i][k] <= 4) {
-										hits1++;
-										game.sendShoot(i, k, game.fieldArray1);
-										game.fieldArray1[i][k] = -2;
-										if(hits1==20)
-											break;
+								} else if (game.fieldArray2[i][k] == 0) {
+									game.fieldArray2[i][k] = -1;
+									Sound.playSound("Sounds/bubble.wav").play();
+									pl = "<=";
+
+									if (!isPVP) {
+										pl = "=>";
+										turn++;
 										robot.tryShot();
 										i = robot.getX();
 										k = robot.getY();
-										if (game.fieldArray1[i][k] == 0) {							
+										if (game.fieldArray1[i][k] >= 1 && game.fieldArray1[i][k] <= 4) {
+											while (game.fieldArray1[i][k] >= 1 && game.fieldArray1[i][k] <= 4) {
+												hits1++;
+												game.sendShoot(i, k, game.fieldArray1);
+												game.fieldArray1[i][k] = -2;
+												if (hits1 == 20)
+													break;
+												robot.tryShot();
+												i = robot.getX();
+												k = robot.getY();
+												if (game.fieldArray1[i][k] == 0) {
+													game.fieldArray1[i][k] = -1; 								
+													Sound.playSound("Sounds/bubble.wav").play();
+												}
+												repaint();
+												revalidate();						
+												Sound.playSound("Sounds/bubble.wav").play();
+											}
+										} else if (game.fieldArray1[i][k] == 0) {
 											game.fieldArray1[i][k] = -1;
 											Sound.playSound("Sounds/bubble.wav").play();
+
 										}
-										repaint();
-										revalidate();
-										Sound.playSound("Sounds/exp.wav").play();
 									}
-								} else if (game.fieldArray1[i][k] == 0) {
-									game.fieldArray1[i][k] = -1;
-									Sound.playSound("Sounds/bubble.wav").play();
-									
+
+									turn++;
 								}
+
+								repaint();
+								revalidate();
 							}
 
-
-							turn++;
 						}
-						
-						repaint();
-						revalidate();
 					}
-
 				}
-				}
-			}
 
 			}
-		
-	
-			if(hits1==20&&isFieldEdible()) {
+
+			if (hits1 == 20 && isFieldEdible()) {
 				setFieldEdible(false);
-				
+
 				Sound.playSound("Sounds/win.wav").play();
-				JOptionPane.showMessageDialog(null,
-						"Player 1 win!!!", "Message",
-						JOptionPane.INFORMATION_MESSAGE);	
-			
-				field1Vis=true;
-				field2Vis=true;
+				JOptionPane.showMessageDialog(null, "Player 1 win!!!", "Message", JOptionPane.INFORMATION_MESSAGE);
+
+				field1Vis = true;
+				field2Vis = true;
 				repaint();
 				revalidate();
-				
+
 			}
-			if(hits2==20&&isFieldEdible()) {;
+			if (hits2 == 20 && isFieldEdible()) {
+				;
 				setFieldEdible(false);
-				if(isPVP) {
+				if (isPVP) {
 					Sound.playSound("Sounds/win.wav").play();
-					JOptionPane.showMessageDialog(null,
-							"Player 2 win!!!", "Message",
-							JOptionPane.INFORMATION_MESSAGE);	
-					}else {
-						Sound.playSound("Sounds/defeat.wav").play();
-						JOptionPane.showMessageDialog(null,
-								"You loose!!!", "Message",
-								JOptionPane.INFORMATION_MESSAGE);	
-							
-					}
-				field1Vis=true;
-				field2Vis=true;
+					JOptionPane.showMessageDialog(null, "Player 2 win!!!", "Message", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					Sound.playSound("Sounds/defeat.wav").play();
+					JOptionPane.showMessageDialog(null, "You loose!!!", "Message", JOptionPane.INFORMATION_MESSAGE);
+
+				}
+				field1Vis = true;
+				field2Vis = true;
 				repaint();
 				revalidate();
 			}
@@ -580,7 +519,7 @@ private void setFieldFrame() {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			
+
 		}
 
 		@Override
@@ -601,11 +540,7 @@ private void setFieldFrame() {
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
-//			if(isFieldSet()&&!isFieldSet2()&&!isFieldEdible()) {
-//			imageX = e.getX()-15;
-//		    imageY = e.getY()-15;
-//		    repaint();
-//			}
+
 		}
 
 		@Override
@@ -620,47 +555,45 @@ private void setFieldFrame() {
 				setCursor(new Cursor(Cursor.HAND_CURSOR));
 		}
 	}
-	
-	   @Override
-       public Dimension getPreferredSize() {
-           return new Dimension(900, 600);
-       }
+
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension(900, 600);
+	}
 
 	private class MyActionListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
 
 			Sound.playSound("Sounds/pressBtn.wav").play(true);
-			
+
 			if (e.getSource().equals(newGamePVE)) {
 				setField2Frame();
 				game.startGame();
 				game.fillField(game.fieldArray1, true);
 				game.fillField(game.fieldArray2, false);
-				hits1=0;
-				hits2=0;
+				hits1 = 0;
+				hits2 = 0;
 				turn = 1;
 				pl = "<=";
-				prog = 2;
 				robot.setCleverLvl(1);
 				isPVP = false;
-				field1Vis=true;
+				field1Vis = true;
 				field2Vis = false;
-				
+
 			}
-			if (e.getSource().equals(newGamePVE2)) {		
-				 setField2Frame();
+			if (e.getSource().equals(newGamePVE2)) {
+				setField2Frame();
 				game.startGame();
 				game.fillField(game.fieldArray1, true);
 				game.fillField(game.fieldArray2, false);
-				hits1=0;
-				hits2=0;
+				hits1 = 0;
+				hits2 = 0;
 				turn = 1;
 				pl = "<=";
-				prog = 2;
 				robot.setCleverLvl(2);
 				isPVP = false;
-				field1Vis=true;
+				field1Vis = true;
 				field2Vis = false;
 			}
 			if (e.getSource().equals(newGamePVE3)) {
@@ -668,61 +601,60 @@ private void setFieldFrame() {
 				game.startGame();
 				game.fillField(game.fieldArray1, true);
 				game.fillField(game.fieldArray2, false);
-				hits1=0;
-				hits2=0;
+				hits1 = 0;
+				hits2 = 0;
 				turn = 1;
 				pl = "<=";
-				prog = 2;
 				robot.setCleverLvl(3);
 				isPVP = false;
-				field1Vis=true;
+				field1Vis = true;
 				field2Vis = false;
 			}
 			if (e.getSource().equals(newGamePVP)) {
-				
+
 				setFieldFrame();
 				game.startGame();
 				game.fillField(game.fieldArray1, false);
 				game.fillField(game.fieldArray2, false);
-				hits1=0;
-				hits2=0;
+				hits1 = 0;
+				hits2 = 0;
 				turn = 1;
 				pl = "<=";
-				prog = 1;
 				isPVP = true;
-				field1Vis=true;
-				field2Vis=true;
-				
+				field1Vis = true;
+				field2Vis = true;
+
 			}
-			
+
 			if (e.getSource().equals(nextBtn)) {
 				setField2Frame();
 				nextBtn.setVisible(false);
 				randomBtn1.setVisible(false);
-				field1Vis =false;
-			
+				field1Vis = false;
+
 				field2Vis = false;
-			
+
 			}
-			
+
 			if (e.getSource().equals(goToMenuBtn)) {
 				mainMenuFrame();
 				goToMenuBtn.setVisible(false);
 				game.cleanEditorField();
 				game.startGame();
-						
+
 			}
-			
+
 			if (e.getSource().equals(playBtn)) {
-				gameFrame(); 
+				gameFrame();
 				field1Vis = false;
-				if(isPVP)
-				field2Vis =false;
-				else field2Vis =true;
-//				field1Vis=true;
-//				field2Vis=true;
+				if (isPVP)
+					field2Vis = false;
+				else
+					field2Vis = true;
+				// field1Vis=true;
+				// field2Vis=true;
 			}
-			
+
 			if (e.getSource().equals(randomBtn2)) {
 				field2Vis = true;
 				setField2(true);
@@ -731,14 +663,14 @@ private void setFieldFrame() {
 				setFieldSet1(true);
 				game.cleanEditorField();
 				game.cleanField(game.fieldArray2);
-			    game.fillField(game.fieldArray2, true);
-			    if(!isPVP) {
-			    	game.cleanField(game.fieldArray1);
-			    game.fillField(game.fieldArray1, true);
-			    }
+				game.fillField(game.fieldArray2, true);
+				if (!isPVP) {
+					game.cleanField(game.fieldArray1);
+					game.fillField(game.fieldArray1, true);
+				}
 			}
-			
-			if (e.getSource().equals(randomBtn1)) {	
+
+			if (e.getSource().equals(randomBtn1)) {
 				setField1(true);
 				setField2(false);
 				setFieldSet2(true);
@@ -746,13 +678,12 @@ private void setFieldFrame() {
 				game.cleanEditorField();
 				game.cleanField(game.fieldArray1);
 				game.fillField(game.fieldArray1, true);
-			
+
 			}
-	
-			
+
 			if (e.getSource().equals(exitBtn)) {
 				System.exit(0);
-				
+
 			}
 			repaint();
 			revalidate();
@@ -767,12 +698,12 @@ private void setFieldFrame() {
 	}
 
 	/**
-	 * @param isMenu the isMenu to set
+	 * @param isMenu
+	 *            the isMenu to set
 	 */
 	public void setMenu(boolean isMenu) {
 		this.isMenu = isMenu;
 	}
-
 
 	public boolean isFieldSet1() {
 		return isFieldSet1;
@@ -813,7 +744,5 @@ private void setFieldFrame() {
 	public void setField2(boolean isField2) {
 		this.isField2 = isField2;
 	}
-
-
 
 }
