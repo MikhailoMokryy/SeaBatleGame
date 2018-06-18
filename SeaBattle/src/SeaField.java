@@ -42,6 +42,7 @@ public class SeaField extends JPanel {
 	private boolean isFieldSet1, isFieldSet2, isField1, isField2, flag, isPVP;
 	private int hits1;
 	private int hits2;
+	private boolean delay = false;
 
 	public SeaField() {
 
@@ -387,7 +388,7 @@ public class SeaField extends JPanel {
 								game.fieldArray1[i][k] = -1;
 								Sound.playSound("Sounds/bubble.wav").play();
 								pl = "=>";
-								if (!isPVP) {
+								if (!isPVP) {			
 									pl = "<=";
 									turn++;
 									robot.tryShot();
@@ -405,11 +406,15 @@ public class SeaField extends JPanel {
 											k = robot.getY();
 											if (game.fieldArray2[i][k] == 0) {
 												game.fieldArray2[i][k] = -1;
-												Sound.playSound("Sounds/bubble.wav").join(); //TODO change delay
+												if(delay)
+												Sound.playSound("Sounds/bubble.wav").join();
+												else Sound.playSound("Sounds/bubble.wav").play();
 											}
 											repaint();
 											revalidate();
-											Sound.playSound("Sounds/exp.wav").join();
+											if(delay)
+												Sound.playSound("Sounds/exp.wav").join();
+												else Sound.playSound("Sounds/exp.wav").play();
 										}
 									} else if (game.fieldArray2[i][k] == 0)
 										game.fieldArray2[i][k] = -1;
