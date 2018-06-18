@@ -17,7 +17,7 @@ public class Sound implements AutoCloseable {
 	private Clip clip = null;
 	private FloatControl volumeControl = null;
 	private boolean playing = false;
-	
+
 	public Sound(File f) {
 		try {
 			stream = AudioSystem.getAudioInputStream(f);
@@ -29,16 +29,16 @@ public class Sound implements AutoCloseable {
 		} catch (IOException | UnsupportedAudioFileException | LineUnavailableException exc) {
 			exc.printStackTrace();
 			released = false;
-			
+
 			close();
 		}
 	}
 
-	// true  if sound download, false if some trouble
+	// true if sound download, false if some trouble
 	public boolean isReleased() {
 		return released;
 	}
-	
+
 	// if music is plaiyng now
 	public boolean isPlaying() {
 		return playing;
@@ -46,10 +46,9 @@ public class Sound implements AutoCloseable {
 
 	// Start
 	/*
-	  breakOld defines behavior if the sound is already playing
-If breakOld == true, o the sound is interrupted and restarted
-Otherwise nothing will happen
-	*/
+	 * breakOld defines behavior if the sound is already playing If breakOld ==
+	 * true, o the sound is interrupted and restarted Otherwise nothing will happen
+	 */
 	public void play(boolean breakOld) {
 		if (released) {
 			if (breakOld) {
@@ -64,23 +63,23 @@ Otherwise nothing will happen
 			}
 		}
 	}
-	
+
 	// the same as play(true)
 	public void play() {
 		play(true);
 	}
-	
+
 	// stop playing
 	public void stop() {
 		if (playing) {
 			clip.stop();
 		}
 	}
-	
+
 	public void close() {
 		if (clip != null)
 			clip.close();
-		
+
 		if (stream != null)
 			try {
 				stream.close();
@@ -89,37 +88,41 @@ Otherwise nothing will happen
 			}
 	}
 
-	//Setting the volume
+	// Setting the volume
 	/*
-	*x must be between 0 and 1 (from the quietest to the loudest)
-	*/
+	 * x must be between 0 and 1 (from the quietest to the loudest)
+	 */
 	public void setVolume(float x) {
-		if (x<0) x = 0;
-		if (x>1) x = 1;
+		if (x < 0)
+			x = 0;
+		if (x > 1)
+			x = 1;
 		float min = volumeControl.getMinimum();
 		float max = volumeControl.getMaximum();
-		volumeControl.setValue((max-min)*x+min);
+		volumeControl.setValue((max - min) * x + min);
 	}
-	
+
 	// Returns the current volume (number from 0 to 1)
 	public float getVolume() {
 		float v = volumeControl.getValue();
 		float min = volumeControl.getMinimum();
 		float max = volumeControl.getMaximum();
-		return (v-min)/(max-min);
+		return (v - min) / (max - min);
 	}
 
 	// Waiting for the sound to stop playing
 	public void join() {
-		if (!released) return;
-		synchronized(clip) {
+		if (!released)
+			return;
+		synchronized (clip) {
 			try {
 				while (playing)
 					clip.wait();
-			} catch (InterruptedException exc) {}
+			} catch (InterruptedException exc) {
+			}
 		}
 	}
-	
+
 	// Static method
 	public static Sound playSound(String path) {
 		File f = new File(path);
@@ -132,7 +135,7 @@ Otherwise nothing will happen
 		public void update(LineEvent ev) {
 			if (ev.getType() == LineEvent.Type.STOP) {
 				playing = false;
-				synchronized(clip) {
+				synchronized (clip) {
 					clip.notify();
 				}
 			}

@@ -159,7 +159,7 @@ public class Comp2 {
 					if (fieldArray[j][i] == -2) {
 						if (checkAround(j, i)) {
 							stop = false;
-							break; 
+							break;
 						}
 					}
 				}
@@ -168,7 +168,8 @@ public class Comp2 {
 					// x = rand.nextInt(10);
 					// y = rand.nextInt(10);
 					if (cleverLvl == 3) {
-						while (fieldArray[x][y] != 1&&fieldArray[x][y] != 2&&fieldArray[x][y] != 3&&fieldArray[x][y] != 4) {
+						while (fieldArray[x][y] != 1 && fieldArray[x][y] != 2 && fieldArray[x][y] != 3
+								&& fieldArray[x][y] != 4) {
 							x = rand.nextInt(10);
 							y = rand.nextInt(10);
 						}
@@ -180,7 +181,7 @@ public class Comp2 {
 					}
 				}
 			}
-		} 
+		}
 	}
 
 	/**
@@ -205,5 +206,4 @@ public class Comp2 {
 		this.cleverLvl = cleverLvl;
 	}
 
-	
 }

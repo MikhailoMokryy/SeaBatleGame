@@ -17,8 +17,8 @@ public class MainClass extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private  Dimension dim;
-	
+	private Dimension dim;
+
 	/**
 	 * Launch the application.
 	 * 
@@ -30,8 +30,8 @@ public class MainClass extends JFrame {
 			public void run() {
 				try {
 					UIManager.setLookAndFeel(new NimbusLookAndFeel());
-					MainClass frame = new MainClass(); 
-	
+					MainClass frame = new MainClass();
+
 					frame.setVisible(true);
 					frame.setResizable(false);
 				} catch (Exception e) {
@@ -49,18 +49,16 @@ public class MainClass extends JFrame {
 		dim = Toolkit.getDefaultToolkit().getScreenSize();
 		dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds((dim.width-900)/2, (dim.height-600)/2, 900, 600);
-		
+		setBounds((dim.width - 900) / 2, (dim.height - 600) / 2, 900, 600);
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-	
+
 		SeaField sf = new SeaField();
 		sf.setBounds(0, 0, 900, 600);
 		contentPane.add(sf);
 		contentPane.setLayout(null);
-		
-
 
 	}
 }
