@@ -196,7 +196,7 @@ public class GameLogic {
 							if (s.getHealth() > 0) {
 								s.setHealth(s.getHealth() - 1);
 							} else {
-								System.out.println(s.getDeckNum() + " - killed horizontal Field: " + field);
+//								System.out.println(s.getDeckNum() + " - killed horizontal Field: " + field);
 								setFieldAroundHorizontalShip(s, fieldArray);
 							}
 
@@ -212,7 +212,7 @@ public class GameLogic {
 							if (s.getHealth() > 0) {
 								s.setHealth(s.getHealth() - 1);
 							} else {
-								System.out.println(s.getDeckNum() + " - killed vertical Field: " + field);
+//								System.out.println(s.getDeckNum() + " - killed vertical Field: " + field);
 								setFieldAroundVerticalShip(s, fieldArray);
 							}
 

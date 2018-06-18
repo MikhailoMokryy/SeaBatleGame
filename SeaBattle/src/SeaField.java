@@ -1,14 +1,10 @@
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -40,14 +36,12 @@ public class SeaField extends JPanel {
 	private Comp2 robot;
 	private int turn;
 	private String pl;
-	private int prog;
 	private boolean field1Vis;
 	private boolean field2Vis;
 	private boolean isMenu, fieldEdible;
 	private boolean isFieldSet1, isFieldSet2, isField1, isField2, flag, isPVP;
 	private int hits1;
 	private int hits2;
-	int imageX, imageY;
 
 	public SeaField() {
 
@@ -57,7 +51,6 @@ public class SeaField extends JPanel {
 		robot = new Comp2(game.fieldArray2, 2);
 		turn = 1;
 		pl = "<=";
-		prog = 2;
 		field1Vis = true;
 		field2Vis = true;
 
@@ -81,10 +74,6 @@ public class SeaField extends JPanel {
 
 		// Sound.playSound("Sounds/Wot2.wav").play();
 
-		// RepaintManager.currentManager(null).setDoubleBufferingEnabled(false);
-		// shipPart = shipPart.getScaledInstance(30, 30, Image.SCALE_DEFAULT);
-
-		// TODO
 
 	}
 
@@ -174,21 +163,6 @@ public class SeaField extends JPanel {
 			}
 		}
 
-		// for (int i = 0; i < 10; i++) {
-		// for (int k = 0; k < 10; k++) {
-		//
-		// if(imageX>=90 + k * 30&&imageX<=110 + k * 30&&imageY>=90 + i *
-		// 30&&imageY<=110 + i * 30) {
-		// game.fieldArray2[i][k] = 1;
-		// g.drawImage(shipPart, 100 + k * 30, 100 + i * 30, 30, 30, null);
-		//
-		//
-		//
-		// }
-		// }
-		//
-		// g.drawImage(shipPart, imageX, imageY, null);
-		// }
 
 		for (int i = 0; i <= 10; i++) {
 			if (isFieldSet2()) {
@@ -431,7 +405,7 @@ public class SeaField extends JPanel {
 											k = robot.getY();
 											if (game.fieldArray2[i][k] == 0) {
 												game.fieldArray2[i][k] = -1;
-												Sound.playSound("Sounds/bubble.wav").join();
+												Sound.playSound("Sounds/bubble.wav").join(); //TODO change delay
 											}
 											repaint();
 											revalidate();
@@ -485,12 +459,12 @@ public class SeaField extends JPanel {
 												i = robot.getX();
 												k = robot.getY();
 												if (game.fieldArray1[i][k] == 0) {
-													game.fieldArray1[i][k] = -1;
+													game.fieldArray1[i][k] = -1; 								
 													Sound.playSound("Sounds/bubble.wav").play();
 												}
 												repaint();
-												revalidate();
-												Sound.playSound("Sounds/exp.wav").play();
+												revalidate();						
+												Sound.playSound("Sounds/bubble.wav").play();
 											}
 										} else if (game.fieldArray1[i][k] == 0) {
 											game.fieldArray1[i][k] = -1;
@@ -566,11 +540,7 @@ public class SeaField extends JPanel {
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			// if(isFieldSet()&&!isFieldSet2()&&!isFieldEdible()) {
-			// imageX = e.getX()-15;
-			// imageY = e.getY()-15;
-			// repaint();
-			// }
+
 		}
 
 		@Override
@@ -606,7 +576,6 @@ public class SeaField extends JPanel {
 				hits2 = 0;
 				turn = 1;
 				pl = "<=";
-				prog = 2;
 				robot.setCleverLvl(1);
 				isPVP = false;
 				field1Vis = true;
@@ -622,7 +591,6 @@ public class SeaField extends JPanel {
 				hits2 = 0;
 				turn = 1;
 				pl = "<=";
-				prog = 2;
 				robot.setCleverLvl(2);
 				isPVP = false;
 				field1Vis = true;
@@ -637,7 +605,6 @@ public class SeaField extends JPanel {
 				hits2 = 0;
 				turn = 1;
 				pl = "<=";
-				prog = 2;
 				robot.setCleverLvl(3);
 				isPVP = false;
 				field1Vis = true;
@@ -653,7 +620,6 @@ public class SeaField extends JPanel {
 				hits2 = 0;
 				turn = 1;
 				pl = "<=";
-				prog = 1;
 				isPVP = true;
 				field1Vis = true;
 				field2Vis = true;
